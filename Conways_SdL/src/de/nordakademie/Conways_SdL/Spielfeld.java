@@ -32,4 +32,10 @@ public class Spielfeld {
 	}
     }
 
+    public int ermittleNachbaranzahl(int x, int y) {
+
+	
+	return 0;
+    }
+
 }
