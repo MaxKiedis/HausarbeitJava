@@ -19,4 +19,17 @@ public class Spielfeld {
 	return werte.get(0).length;
     }
 
+    public void printSpielfeld() {
+	for (int i = 0; i < werte.size(); i++) {
+	    for (int j = 0; j < werte.get(i).length; j++) {
+		if (werte.get(i)[j]) {
+		    System.out.print("O");
+		} else {
+		    System.out.print("X");
+		}
+	    }
+	    System.out.println();
+	}
+    }
+
 }

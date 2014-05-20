@@ -17,16 +17,15 @@ public class Dateihandling {
 
 	FileReader fileReader = null;
 	BufferedReader bufferedReader = null;
+	Spielfeld spielfeld = null;
 
 	try {
 	    fileReader = new FileReader(datei);
 	    bufferedReader = new BufferedReader(fileReader);
 
-	    Spielfeld spielfeld = null;
 
 	    while (bufferedReader.ready()) {
 		String zeile = bufferedReader.readLine();
-		System.out.println(zeile);
 		// Pruefe Inhalt
 		if (!pruefeDateiinhalt(zeile)) {
 		    Benutzerdialoge.gebeFehler("Es sind verbotene Zeichen in der Datei");
@@ -75,9 +74,7 @@ public class Dateihandling {
 		}
 	}
 
-	// Pruefung Inhalt
-
-	return null;
+	return spielfeld;
     }
 
     private static boolean[] konvertiereZeile(String zeile) {
