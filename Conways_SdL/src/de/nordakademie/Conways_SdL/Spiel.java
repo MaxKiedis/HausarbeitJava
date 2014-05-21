@@ -2,6 +2,8 @@ package de.nordakademie.Conways_SdL;
 
 import java.util.ArrayList;
 
+import de.nordakademie.Conways_SdL.RandverhaltenSammlung.MauerDesTodes;
+import de.nordakademie.Conways_SdL.RandverhaltenSammlung.PackmanUniversum;
 import de.nordakademie.Conways_SdL.Spielmodi.Standard;
 
 public class Spiel {
@@ -9,6 +11,7 @@ public class Spiel {
     // Variablen
     private ArrayList<Spielfeld> spielfeldEvolutionen;
     private Spielmodus modus;
+    private Randverhalten randverhalten;
 
     Spiel() {
 	// Laden der Datei
@@ -16,9 +19,6 @@ public class Spiel {
 	do {
 	    neuesFeld = Dateihandling.oeffneDatei();
 	} while (neuesFeld == null);
-
-	spielfeldEvolutionen = new ArrayList<Spielfeld>();
-	spielfeldEvolutionen.add(neuesFeld);
 
 	// Waehlen des Spielmodus
 
@@ -44,8 +44,24 @@ public class Spiel {
 	// Waehlen des Randverhaltens
 	// 0 = Wand des Todes
 	// 1 = Pacman Universum
-	int randverhalten = Benutzerdialoge.showRandverhalten();
+	int auswahl = Benutzerdialoge.showRandverhalten();
+	switch (auswahl) {
+	case 0:
+	    randverhalten = new MauerDesTodes();
+	    break;
+	case 1:
+	    randverhalten = new PackmanUniversum();
+	    break;
+	default:
+	    randverhalten = new PackmanUniversum();
+	    break;
+	}
 
+	// Passe das Randverhalten an
+	spielfeldEvolutionen = new ArrayList<Spielfeld>();
+	neuesFeld = randverhalten.anlegenRand(neuesFeld);
+
+	spielfeldEvolutionen.add(neuesFeld);
     }
 
     public void starten() {
