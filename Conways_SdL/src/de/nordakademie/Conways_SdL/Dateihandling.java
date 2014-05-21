@@ -10,7 +10,12 @@ public class Dateihandling {
     public static Spielfeld oeffneDatei() {
 	String eingabe = null;
 	do {
-	    eingabe = pruefeDateipfad(Benutzerdialoge.zeigeInputDialog());
+	    String input;
+	    input = Benutzerdialoge.zeigeInputDialog();
+	    if (input == null) {
+		System.exit(0);
+	    }
+	    eingabe = pruefeDateipfad(input);
 	} while (istDateipfadLeer(eingabe));
 
 	File datei = new File(System.getProperty("user.home") + "//spiel_des_lebens//" + eingabe);
@@ -23,7 +28,6 @@ public class Dateihandling {
 	    fileReader = new FileReader(datei);
 	    bufferedReader = new BufferedReader(fileReader);
 
-
 	    while (bufferedReader.ready()) {
 		String zeile = bufferedReader.readLine();
 		// Pruefe Inhalt
@@ -31,9 +35,15 @@ public class Dateihandling {
 		    Benutzerdialoge.gebeFehler("Es sind verbotene Zeichen in der Datei");
 		    return null;
 		}
-		// Pruefe Format
+		// Pruefe Zeilenformat
 		if (!pruefeZeilenlaenge(zeile)) {
-		    Benutzerdialoge.gebeFehler("Die Daten haben nicht die richtige Laenge!");
+		    Benutzerdialoge.gebeFehler("Die Zeilen haben eine unterschiedliche Laenge!");
+		    return null;
+		}
+
+		// Pruefe Zeilenanzahl
+		if (spielfeld != null && spielfeld.gebeZeilenAnzahl() >= 100) {
+		    Benutzerdialoge.gebeFehler("Der Anfangszustand hat zu viele Zeilen!");
 		    return null;
 		}
 

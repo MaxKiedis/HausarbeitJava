@@ -50,5 +50,27 @@ public class Spiel {
 
     public void starten() {
 	spielfeldEvolutionen.get(0).printSpielfeld();
+
+	System.out.println();
+	for (int i = 0; i < spielfeldEvolutionen.get(0).gebeZeilenAnzahl(); i++) {
+	    for (int j = 0; j < spielfeldEvolutionen.get(0).gebeLaengeZeileZurueck(); j++) {
+		System.out.print(spielfeldEvolutionen.get(0).ermittleNachbaranzahl(j, i));
+	    }
+	    System.out.println();
+	}
+
+	ArrayList<boolean[]> holder = new ArrayList<boolean[]>();
+	for (int i = 0; i < spielfeldEvolutionen.get(0).gebeZeilenAnzahl(); i++) {
+	    boolean[] reihe = new boolean[spielfeldEvolutionen.get(0).gebeLaengeZeileZurueck()];
+	    for (int j = 0; j < spielfeldEvolutionen.get(0).gebeLaengeZeileZurueck(); j++) {
+		reihe[j] = modus.gibLebenszustandNaechsteRunde(spielfeldEvolutionen.get(0).ermittleNachbaranzahl(j, i),
+			spielfeldEvolutionen.get(0).gebeZustandZelle(j, i));
+	    }
+	    holder.add(reihe);
+	}
+	Spielfeld entwickeltesFeld = new Spielfeld(holder);
+	System.out.println();
+	entwickeltesFeld.printSpielfeld();
+
     }
 }
