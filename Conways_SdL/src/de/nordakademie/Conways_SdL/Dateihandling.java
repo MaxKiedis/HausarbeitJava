@@ -3,10 +3,14 @@ package de.nordakademie.Conways_SdL;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintStream;
 
 public class Dateihandling {
+    static String dateiname;
+
     public static Spielfeld oeffneDatei() {
 	String eingabe = null;
 	do {
@@ -18,7 +22,8 @@ public class Dateihandling {
 	    eingabe = pruefeDateipfad(input);
 	} while (istDateipfadLeer(eingabe));
 
-	File datei = new File(System.getProperty("user.home") + "//spiel_des_lebens//" + eingabe);
+	dateiname = eingabe;
+	File datei = new File(System.getProperty("user.home") + "//spiel_des_lebens//" + eingabe + ".start");
 
 	FileReader fileReader = null;
 	BufferedReader bufferedReader = null;
@@ -136,5 +141,32 @@ public class Dateihandling {
 	}
 
 	return processedInput;
+    }
+
+    public static void speichereEndzustand(Spielfeld letztesFeld, int counter, Randverhalten verhalten) {
+	File datei = new File(System.getProperty("user.home") + "//spiel_des_lebens//" + dateiname + ".ende");
+
+	try {
+	    FileOutputStream fileOutput = new FileOutputStream(datei);
+	    PrintStream dateiAusgabe = new PrintStream(fileOutput);
+
+	    dateiAusgabe.println("Die Ausgabe ist statisch nach " + counter + " Generationen!");
+	    dateiAusgabe.println();
+	    Spielfeld feld = verhalten.abziehenRand(letztesFeld);
+	    for (int i = 0; i < letztesFeld.gebeZeilenAnzahl(); i++) {
+		for (int j = 0; j < letztesFeld.gebeLaengeZeileZurueck(); j++) {
+		    if (feld.gebeZustandZelle(j, i)) {
+			dateiAusgabe.print("O");
+		    } else {
+			dateiAusgabe.print("X");
+		    }
+		}
+		dateiAusgabe.println();
+	    }
+
+	} catch (FileNotFoundException e) {
+	    Benutzerdialoge.gebeFehler("Die Datei wurde nicht gefunden (Fehler)! Sie wurde nicht gespeichert!");
+	}
+
     }
 }

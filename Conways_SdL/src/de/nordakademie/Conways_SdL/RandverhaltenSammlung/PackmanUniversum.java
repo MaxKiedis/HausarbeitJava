@@ -5,14 +5,23 @@ import de.nordakademie.Conways_SdL.Spielfeld;
 
 public class PackmanUniversum implements Randverhalten {
 
-    @Override
-    public void setzeRand() {
-
-    }
 
     @Override
     public Spielfeld anlegenRand(Spielfeld spielfeld) {
 	return spielfeld;
+    }
+
+    @Override
+    public Spielfeld setzeRand(Spielfeld neuesFeld) {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    @Override
+    public Spielfeld abziehenRand(Spielfeld letztesFeld) {
+	return letztesFeld;
+	// TODO Auto-generated method stub
+	
     }
 
 }

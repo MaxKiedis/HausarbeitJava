@@ -85,4 +85,7 @@ public class Spielfeld {
 	return werte.size();
     }
 
+    public void setzeZustand(boolean zustand, int x, int y) {
+	werte.get(y)[x] = zustand;
+    }
 }

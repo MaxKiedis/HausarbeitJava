@@ -6,10 +6,14 @@ public class Benutzerdialoge {
     public static void gebeFehler(String message) {
 	JOptionPane.showMessageDialog(null, message);
     }
+    
+    public static void gebeInfo(String message) {
+	JOptionPane.showMessageDialog(null, message);
+    }
 
     public static String zeigeInputDialog() {
 	String eingabe = JOptionPane
-		.showInputDialog("Bitte den Dateinamen (mit Endung /'.start/') eingeben. Vorkonfigurierter Pfad ist: "
+		.showInputDialog("Bitte den Dateinamen (OHNE Endung /'.start/') eingeben. Vorkonfigurierter Pfad ist: "
 			+ System.getProperty("user.home") + "/spiel_des_lebens/");
 	return eingabe;
     }

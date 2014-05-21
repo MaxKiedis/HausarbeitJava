@@ -47,10 +47,10 @@ public class Spiel {
 	int auswahl = Benutzerdialoge.showRandverhalten();
 	switch (auswahl) {
 	case 0:
-	    randverhalten = new MauerDesTodes();
+	    randverhalten = new PackmanUniversum();
 	    break;
 	case 1:
-	    randverhalten = new PackmanUniversum();
+	    randverhalten = new MauerDesTodes();
 	    break;
 	default:
 	    randverhalten = new PackmanUniversum();
@@ -59,34 +59,70 @@ public class Spiel {
 
 	// Passe das Randverhalten an
 	spielfeldEvolutionen = new ArrayList<Spielfeld>();
-	neuesFeld = randverhalten.anlegenRand(neuesFeld);
+	Spielfeld feld = randverhalten.anlegenRand(neuesFeld);
 
-	spielfeldEvolutionen.add(neuesFeld);
+	spielfeldEvolutionen.add(feld);
+	spielfeldEvolutionen.get(0).printSpielfeld();
     }
 
     public void starten() {
-	spielfeldEvolutionen.get(0).printSpielfeld();
 
-	System.out.println();
-	for (int i = 0; i < spielfeldEvolutionen.get(0).gebeZeilenAnzahl(); i++) {
-	    for (int j = 0; j < spielfeldEvolutionen.get(0).gebeLaengeZeileZurueck(); j++) {
-		System.out.print(spielfeldEvolutionen.get(0).ermittleNachbaranzahl(j, i));
-	    }
+	Spielfeld letztesFeld = spielfeldEvolutionen.get(0);
+	int counter = 0;
+	do {
+	    counter++;
+	    Spielfeld feld = entwickleSpielfeld(letztesFeld, randverhalten);
+	    letztesFeld = feld;
 	    System.out.println();
+	    System.out.println("Runde " + counter);
+	    // letztesFeld.printSpielfeld();
+	} while (!checkStatusSchoneinmalVorhanden(letztesFeld));
+
+	// statisch oder zyklisch
+	if (vergleicheFeld(letztesFeld, spielfeldEvolutionen.get(spielfeldEvolutionen.size() - 1))) {
+	    Dateihandling.speichereEndzustand(letztesFeld, counter, randverhalten);
+	} else {
+	    Benutzerdialoge.gebeInfo("Der Zustand ist zyklisch. Erreicht nach " + counter + " Generationen");
 	}
 
+    }
+
+    private Spielfeld entwickleSpielfeld(Spielfeld bisherigesSpielfeld, Randverhalten randverhalten) {
 	ArrayList<boolean[]> holder = new ArrayList<boolean[]>();
-	for (int i = 0; i < spielfeldEvolutionen.get(0).gebeZeilenAnzahl(); i++) {
-	    boolean[] reihe = new boolean[spielfeldEvolutionen.get(0).gebeLaengeZeileZurueck()];
-	    for (int j = 0; j < spielfeldEvolutionen.get(0).gebeLaengeZeileZurueck(); j++) {
-		reihe[j] = modus.gibLebenszustandNaechsteRunde(spielfeldEvolutionen.get(0).ermittleNachbaranzahl(j, i),
-			spielfeldEvolutionen.get(0).gebeZustandZelle(j, i));
+	for (int i = 0; i < bisherigesSpielfeld.gebeZeilenAnzahl(); i++) {
+	    boolean[] reihe = new boolean[bisherigesSpielfeld.gebeLaengeZeileZurueck()];
+	    for (int j = 0; j < bisherigesSpielfeld.gebeLaengeZeileZurueck(); j++) {
+		reihe[j] = modus.gibLebenszustandNaechsteRunde(bisherigesSpielfeld.ermittleNachbaranzahl(j, i),
+			bisherigesSpielfeld.gebeZustandZelle(j, i));
 	    }
 	    holder.add(reihe);
 	}
-	Spielfeld entwickeltesFeld = new Spielfeld(holder);
-	System.out.println();
-	entwickeltesFeld.printSpielfeld();
 
+	Spielfeld neuesFeld = new Spielfeld(holder);
+	Spielfeld ueberarbeitetesFeld = randverhalten.setzeRand(neuesFeld);
+
+	return ueberarbeitetesFeld;
+    }
+
+    private boolean checkStatusSchoneinmalVorhanden(Spielfeld neuesFeld) {
+	for (int i = 0; i < spielfeldEvolutionen.size(); i++) {
+	    if (vergleicheFeld(spielfeldEvolutionen.get(i), neuesFeld)) {
+		return true;
+	    }
+	}
+	spielfeldEvolutionen.add(neuesFeld);
+	return false;
+    }
+
+    private boolean vergleicheFeld(Spielfeld spielfeld, Spielfeld neuesFeld) {
+	for (int i = 0; i < spielfeld.gebeZeilenAnzahl(); i++) {
+	    for (int j = 0; j < spielfeld.gebeLaengeZeileZurueck(); j++) {
+		if (spielfeld.gebeZustandZelle(j, i) != neuesFeld.gebeZustandZelle(j, i)) {
+		    return false;
+		}
+	    }
+
+	}
+	return true;
     }
 }
