@@ -15,10 +15,10 @@ import de.nordakademie.Conways_SdL.spielmodi.Standard;
 public class Spiel {
 
     // Variablen
+    private String dateiname;
     private ArrayList<Spielfeld> vergangeneSpielfelder;
     private Spielmodus modus;
     private Randverhalten randverhalten;
-    private String dateiname;
     private JFrame ladebalkenFenster;
     private JLabel labelAnzahlGenerationen;
 
@@ -72,7 +72,7 @@ public class Spiel {
 	// Passe das Randverhalten fuer das eingelesene Spielfeld an
 	vergangeneSpielfelder = new ArrayList<Spielfeld>();
 	Spielfeld angepasstesSpielfeld = randverhalten
-		.anlegenRand(importiertesSpielfeld);
+		.initialisierenRandverhalten(importiertesSpielfeld);
 
 	// Das angepasste Feld zur ArrayList hinzufuegen
 	vergangeneSpielfelder.add(angepasstesSpielfeld);
@@ -101,7 +101,7 @@ public class Spiel {
 	// statisch oder zyklisch
 	if (spielfeldAlteGeneration.istGleichesSpielfeld(vergangeneSpielfelder
 		.get(vergangeneSpielfelder.size() - 1))) {
-	    Dateihandling.speichernSpielfeld(spielfeldAlteGeneration,
+	    Dateihandling.speichernEndzustand(spielfeldAlteGeneration,
 		    anzahlGenerationen, randverhalten, dateiname);
 	} else {
 	    Benutzerinterface

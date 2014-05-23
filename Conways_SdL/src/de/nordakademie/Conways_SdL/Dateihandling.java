@@ -16,16 +16,17 @@ import java.io.PrintStream;
 public class Dateihandling {
 
     /**
+     * 
+     */
+    private static final int MAXIMAL_X_DIMENSION = 100;
+
+    private static final int MAXIMAL_Y_DIMENSION = 100;
+
+    /**
      * Privater Konstruktor, da niemand Objekte erzeugen sollte
      */
     private Dateihandling() {
     }
-
-    /**
-     * 
-     */
-    private static final int MAXIMAL_X_DIMENSION = 100;
-    private static final int MAXIMAL_Y_DIMENSION = 100;
 
     public static Spielfeld einlesenSpielfeld(String dateiname) {
 	File datei = new File(System.getProperty("user.home")
@@ -123,6 +124,61 @@ public class Dateihandling {
 	return spielfeld;
     }
 
+    private static boolean hatVerboteneZeichen(final String zeile) {
+        for (int i = 0; i < zeile.length(); i++) {
+            if (zeile.charAt(i) != 'X' && zeile.charAt(i) != 'O') {
+        	return true;
+            }
+        }
+        return false;
+    }
+
+    public static void speichernEndzustand(final Spielfeld spielfeld,
+            final int anzahlGenerationen, final Randverhalten randverhalten,
+            final String dateiname) {
+        File datei = new File(System.getProperty("user.home")
+        	+ "//spiel_des_lebens//" + dateiname + ".ende");
+    
+        FileOutputStream fileOutput = null;
+        PrintStream dateiAusgabe = null;
+    
+        try {
+            fileOutput = new FileOutputStream(datei);
+            dateiAusgabe = new PrintStream(fileOutput);
+    
+            dateiAusgabe.println("Die Ausgabe ist statisch nach "
+        	    + anzahlGenerationen + " Generationen!");
+            dateiAusgabe.println();
+            Spielfeld feld = randverhalten.abschliessenRandverhalten(spielfeld);
+    
+            for (int i = 0; i < feld.gibYDimension(); i++) {
+        	for (int j = 0; j < feld.gibXDimension(); j++) {
+        	    if (feld.gibZellzustand(j, i)) {
+        		dateiAusgabe.print("O");
+        	    } else {
+        		dateiAusgabe.print("X");
+        	    }
+        	}
+        	dateiAusgabe.println();
+            }
+        } catch (FileNotFoundException e) {
+            Benutzerinterface
+        	    .zeigeInfoFenster("Die Datei wurde nicht gefunden (Fehler)! Sie wurde nicht gespeichert!");
+        } finally {
+            if (fileOutput != null) {
+        	try {
+        	    fileOutput.close();
+        	} catch (IOException e) {
+        	    Benutzerinterface
+        		    .zeigeInfoFenster("Fehler beim FileOutput");
+        	}
+            }
+            if (dateiAusgabe != null) {
+        	dateiAusgabe.close();
+            }
+        }
+    }
+
     private static boolean[] konvertiereZeile(final String zeile) {
 	boolean[] werte = new boolean[zeile.length()];
 
@@ -134,60 +190,5 @@ public class Dateihandling {
 	    }
 	}
 	return werte;
-    }
-
-    private static boolean hatVerboteneZeichen(final String zeile) {
-	for (int i = 0; i < zeile.length(); i++) {
-	    if (zeile.charAt(i) != 'X' && zeile.charAt(i) != 'O') {
-		return true;
-	    }
-	}
-	return false;
-    }
-
-    public static void speichernSpielfeld(final Spielfeld spielfeld,
-	    final int anzahlGenerationen, final Randverhalten randverhalten,
-	    final String dateiname) {
-	File datei = new File(System.getProperty("user.home")
-		+ "//spiel_des_lebens//" + dateiname + ".ende");
-
-	FileOutputStream fileOutput = null;
-	PrintStream dateiAusgabe = null;
-
-	try {
-	    fileOutput = new FileOutputStream(datei);
-	    dateiAusgabe = new PrintStream(fileOutput);
-
-	    dateiAusgabe.println("Die Ausgabe ist statisch nach "
-		    + anzahlGenerationen + " Generationen!");
-	    dateiAusgabe.println();
-	    Spielfeld feld = randverhalten.anwendenRandverhalten(spielfeld);
-
-	    for (int i = 0; i < feld.gibYDimension(); i++) {
-		for (int j = 0; j < feld.gibXDimension(); j++) {
-		    if (feld.gibZellzustand(j, i)) {
-			dateiAusgabe.print("O");
-		    } else {
-			dateiAusgabe.print("X");
-		    }
-		}
-		dateiAusgabe.println();
-	    }
-	} catch (FileNotFoundException e) {
-	    Benutzerinterface
-		    .zeigeInfoFenster("Die Datei wurde nicht gefunden (Fehler)! Sie wurde nicht gespeichert!");
-	} finally {
-	    if (fileOutput != null) {
-		try {
-		    fileOutput.close();
-		} catch (IOException e) {
-		    Benutzerinterface
-			    .zeigeInfoFenster("Fehler beim FileOutput");
-		}
-	    }
-	    if (dateiAusgabe != null) {
-		dateiAusgabe.close();
-	    }
-	}
     }
 }

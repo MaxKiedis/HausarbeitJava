@@ -5,15 +5,15 @@ import de.nordakademie.Conways_SdL.Spielfeld;
 
 public class PackmanUniversum extends Randverhalten {
 
-    public final Spielfeld anlegenRand(final Spielfeld spielfeld) {
+    public final Spielfeld initialisierenRandverhalten(final Spielfeld spielfeld) {
 	return spielfeld;
     }
 
-    public final Spielfeld setzeRand(final Spielfeld neuesFeld) {
+    public final Spielfeld bereinigenRandverhalten(final Spielfeld neuesFeld) {
 	return neuesFeld;
     }
 
-    public final Spielfeld anwendenRandverhalten(final Spielfeld letztesFeld) {
+    public final Spielfeld abschliessenRandverhalten(final Spielfeld letztesFeld) {
 	return letztesFeld;
     }
 }
