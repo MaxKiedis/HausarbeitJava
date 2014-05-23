@@ -8,8 +8,6 @@ public class LebenOhneTod extends Spielmodus {
 	if (lebenszustand || nachbaranzahl == 3) {
 	    return true;
 	}
-
 	return false;
-
     }
 }

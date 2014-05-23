@@ -4,48 +4,52 @@ import java.util.ArrayList;
 
 import de.nordakademie.Conways_SdL.RandverhaltenSammlung.MauerDesTodes;
 import de.nordakademie.Conways_SdL.RandverhaltenSammlung.PackmanUniversum;
+import de.nordakademie.Conways_SdL.Spielmodi.Leben34;
+import de.nordakademie.Conways_SdL.Spielmodi.LebenOhneTod;
 import de.nordakademie.Conways_SdL.Spielmodi.Standard;
 
 public class Spiel {
 
     // Variablen
-    private ArrayList<Spielfeld> spielfeldEvolutionen;
+    private ArrayList<Spielfeld> vergangeneSpielfelder;
     private Spielmodus modus;
     private Randverhalten randverhalten;
+    private String dateiname;
 
     Spiel() {
-	// Laden der Datei
-	Spielfeld neuesFeld;
+	Spielfeld importiertesSpielfeld;
 	do {
-	    neuesFeld = Dateihandling.oeffneDatei();
-	} while (neuesFeld == null);
+	    // Abfrage Dateipfad
+	    dateiname = Benutzerdialoge.zeigePfadeingabe();
+	    // Laden der Datei
+	    importiertesSpielfeld = Dateihandling.leseSpielfeldAusDatei(dateiname);
+	} while (importiertesSpielfeld == null);
 
 	// Waehlen des Spielmodus
-
 	// 0 = Leben ohne Tod
 	// 1 = 34 Leben
 	// 2 = Standard
-	int spielmodus = Benutzerdialoge.showSpielmodus();
-	switch (spielmodus) {
+	switch (Benutzerdialoge.zeigeSpielmoduseingabe()) {
 	case 0:
-	    modus = new Standard();
+	    modus = new LebenOhneTod();
 	    break;
 	case 1:
-	    modus = new Standard();
+	    modus = new Leben34();
 	    break;
 	case 2:
 	    modus = new Standard();
 	    break;
 	default:
-	    modus = new Standard();
+	    // Falls der Exit-Button gedrueckt werden sollte, bricht das
+	    // Programm ab
+	    System.exit(0);
 	    break;
 	}
 
 	// Waehlen des Randverhaltens
 	// 0 = Wand des Todes
 	// 1 = Pacman Universum
-	int auswahl = Benutzerdialoge.showRandverhalten();
-	switch (auswahl) {
+	switch (Benutzerdialoge.zeigeRandverhalteneingabe()) {
 	case 0:
 	    randverhalten = new PackmanUniversum();
 	    break;
@@ -53,75 +57,76 @@ public class Spiel {
 	    randverhalten = new MauerDesTodes();
 	    break;
 	default:
-	    randverhalten = new PackmanUniversum();
+	    // Falls der Exit-Button gedrueckt werden sollte, bricht das
+	    // Programm ab
+	    System.exit(0);
 	    break;
 	}
 
-	// Passe das Randverhalten an
-	spielfeldEvolutionen = new ArrayList<Spielfeld>();
-	Spielfeld feld = randverhalten.anlegenRand(neuesFeld);
+	// Passe das Randverhalten fuer das eingelesene Spielfeld an
+	vergangeneSpielfelder = new ArrayList<Spielfeld>();
+	Spielfeld angepasstesSpielfeld = randverhalten.anlegenRand(importiertesSpielfeld);
 
-	spielfeldEvolutionen.add(feld);
-	spielfeldEvolutionen.get(0).printSpielfeld();
+	// Das angepasste Feld zur ArrayList hinzufuegen
+	vergangeneSpielfelder.add(angepasstesSpielfeld);
+	vergangeneSpielfelder.get(0).schreibeSpielfeld();
     }
 
     public void starten() {
+	// Eingelesenes Spielfeld als Startzustand definieren
+	Spielfeld spielfeldAlteGeneration = vergangeneSpielfelder.get(0);
+	int anzahlGenerationen = 0;
 
-	Spielfeld letztesFeld = spielfeldEvolutionen.get(0);
-	int counter = 0;
+	// Dies ist der Algorithmus zum entwickeln der Spielfelder
 	do {
-	    counter++;
-	    Spielfeld feld = entwickleSpielfeld(letztesFeld, randverhalten);
-	    letztesFeld = feld;
+	    anzahlGenerationen++;
+	    Spielfeld spielfeldNeueGeneration = entwickleGeneration(spielfeldAlteGeneration, randverhalten);
+	    spielfeldAlteGeneration = spielfeldNeueGeneration;
 	    System.out.println();
-	    System.out.println("Runde " + counter);
-	    letztesFeld.printSpielfeld();
-	} while (!checkStatusSchoneinmalVorhanden(letztesFeld));
+	    System.out.println("Runde " + anzahlGenerationen);
+	    spielfeldAlteGeneration.schreibeSpielfeld();
+	} while (!istDublette(spielfeldAlteGeneration));
 
 	// statisch oder zyklisch
-	if (vergleicheFeld(letztesFeld, spielfeldEvolutionen.get(spielfeldEvolutionen.size() - 1))) {
-	    Dateihandling.speichereEndzustand(letztesFeld, counter, randverhalten);
+	if (istGleichesSpielfeld(spielfeldAlteGeneration, vergangeneSpielfelder.get(vergangeneSpielfelder.size() - 1))) {
+	    Dateihandling.speichereEndzustand(spielfeldAlteGeneration, anzahlGenerationen, randverhalten, dateiname);
 	} else {
-	    Benutzerdialoge.gebeInfo("Der Zustand ist zyklisch. Erreicht nach " + counter + " Generationen");
+	    Benutzerdialoge.zeigeInfoFenster("Der Zustand ist zyklisch. Erreicht nach " + anzahlGenerationen
+		    + " Generationen");
 	}
-
     }
 
-    private Spielfeld entwickleSpielfeld(Spielfeld bisherigesSpielfeld, Randverhalten randverhalten) {
-	ArrayList<boolean[]> holder = new ArrayList<boolean[]>();
-	for (int i = 0; i < bisherigesSpielfeld.gebeZeilenAnzahl(); i++) {
-	    boolean[] reihe = new boolean[bisherigesSpielfeld.gebeLaengeZeileZurueck()];
-	    for (int j = 0; j < bisherigesSpielfeld.gebeLaengeZeileZurueck(); j++) {
-		reihe[j] = modus.gibLebenszustandNaechsteRunde(bisherigesSpielfeld.ermittleNachbaranzahl(j, i),
-			bisherigesSpielfeld.gebeZustandZelle(j, i));
+    private Spielfeld entwickleGeneration(Spielfeld altesSpielfeld, Randverhalten randverhalten) {
+	ArrayList<boolean[]> werteFuerSpielfeld = new ArrayList<boolean[]>();
+	for (int i = 0; i < altesSpielfeld.gibYDimension(); i++) {
+	    boolean[] zeile = new boolean[altesSpielfeld.gibXDimension()];
+	    for (int j = 0; j < altesSpielfeld.gibXDimension(); j++) {
+		zeile[j] = modus.gibLebenszustandNaechsteRunde(altesSpielfeld.gibNachbaranzahl(j, i),
+			altesSpielfeld.gibZellzustand(j, i));
 	    }
-	    holder.add(reihe);
+	    werteFuerSpielfeld.add(zeile);
 	}
-
-	Spielfeld neuesFeld = new Spielfeld(holder);
-	Spielfeld ueberarbeitetesFeld = randverhalten.setzeRand(neuesFeld);
-
-	return ueberarbeitetesFeld;
+	Spielfeld neuesSpielfeld = randverhalten.setzeRand(new Spielfeld(werteFuerSpielfeld));
+	return neuesSpielfeld;
     }
 
-    private boolean checkStatusSchoneinmalVorhanden(Spielfeld neuesFeld) {
-	for (int i = 0; i < spielfeldEvolutionen.size(); i++) {
-	    if (vergleicheFeld(spielfeldEvolutionen.get(i), neuesFeld)) {
+    private boolean istDublette(Spielfeld spielfeld) {
+	for (int i = 0; i < vergangeneSpielfelder.size(); i++) {
+	    if (istGleichesSpielfeld(vergangeneSpielfelder.get(i), spielfeld)) {
 		return true;
 	    }
 	}
-	spielfeldEvolutionen.add(neuesFeld);
+	vergangeneSpielfelder.add(spielfeld);
 	return false;
     }
 
-    private boolean vergleicheFeld(Spielfeld spielfeld, Spielfeld neuesFeld) {
-	for (int i = 0; i < spielfeld.gebeZeilenAnzahl(); i++) {
-	    for (int j = 0; j < spielfeld.gebeLaengeZeileZurueck(); j++) {
-		if (spielfeld.gebeZustandZelle(j, i) != neuesFeld.gebeZustandZelle(j, i)) {
+    private boolean istGleichesSpielfeld(Spielfeld spielfeld, Spielfeld neuesFeld) {
+	for (int i = 0; i < spielfeld.gibYDimension(); i++) {
+	    for (int j = 0; j < spielfeld.gibXDimension(); j++) {
+		if (spielfeld.gibZellzustand(j, i) != neuesFeld.gibZellzustand(j, i)) {
 		    return false;
 		}
 	    }
-
 	}
 	return true;
     }

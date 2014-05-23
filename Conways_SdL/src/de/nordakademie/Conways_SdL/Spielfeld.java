@@ -4,29 +4,29 @@ import java.util.ArrayList;
 
 public class Spielfeld {
 
-    ArrayList<boolean[]> werte;
+    ArrayList<boolean[]> zeilenMitZellen;
 
     public Spielfeld(boolean[] zeile) {
-	werte = new ArrayList<boolean[]>();
-	werte.add(zeile);
+	zeilenMitZellen = new ArrayList<boolean[]>();
+	zeilenMitZellen.add(zeile);
     }
 
-    public Spielfeld(ArrayList<boolean[]> holder) {
-	werte = holder;
+    public Spielfeld(ArrayList<boolean[]> zeilenMitZellen) {
+	this.zeilenMitZellen = zeilenMitZellen;
     }
 
-    public void fuegeZeileHinzu(boolean[] konvertierteZeile) {
-	werte.add(konvertierteZeile);
+    public void hinzufuegenZeile(boolean[] zeile) {
+	zeilenMitZellen.add(zeile);
     }
 
-    public int gebeLaengeZeileZurueck() {
-	return werte.get(0).length;
+    public int gibXDimension() {
+	return zeilenMitZellen.get(0).length;
     }
 
-    public void printSpielfeld() {
-	for (int i = 0; i < werte.size(); i++) {
-	    for (int j = 0; j < werte.get(i).length; j++) {
-		if (werte.get(i)[j]) {
+    public void schreibeSpielfeld() {
+	for (int i = 0; i < zeilenMitZellen.size(); i++) {
+	    for (int j = 0; j < zeilenMitZellen.get(i).length; j++) {
+		if (zeilenMitZellen.get(i)[j]) {
 		    System.out.print("O");
 		} else {
 		    System.out.print("X");
@@ -36,21 +36,19 @@ public class Spielfeld {
 	}
     }
 
-    public int ermittleNachbaranzahl(int x, int y) {
-	int dim_x = gebeLaengeZeileZurueck(); // 1
-	int dim_y = gebeZeilenAnzahl(); // 1
+    public int gibNachbaranzahl(int x, int y) {
 	int current_x;
 	int current_y;
 	int nachbaranzahl = 0;
 
-	int start_x = x - 1; // 0
-	int start_y = y - 1; // 0
+	int start_x = x - 1;
+	int start_y = y - 1;
 	if (start_x < 0) {
-	    start_x += dim_x;
+	    start_x += gibXDimension();
 	}
 
 	if (start_y < 0) {
-	    start_y += dim_y;
+	    start_y += gibYDimension();
 	}
 
 	for (int i = 0; i < 3; i++) { // Zeilen
@@ -59,33 +57,32 @@ public class Spielfeld {
 		    current_x = start_x + j;
 		    current_y = start_y + i;
 
-		    while (current_x >= dim_x) {
-			current_x -= dim_x;
+		    while (current_x >= gibXDimension()) {
+			current_x -= gibXDimension();
 		    }
 
-		    while (current_y >= dim_y) {
-			current_y -= dim_y;
+		    while (current_y >= gibYDimension()) {
+			current_y -= gibYDimension();
 		    }
 
-		    if (gebeZustandZelle(current_x, current_y)) {
+		    if (gibZellzustand(current_x, current_y)) {
 			nachbaranzahl++;
 		    }
 		}
 	    }
 	}
-
 	return nachbaranzahl;
     }
 
-    public boolean gebeZustandZelle(int x, int y) {
-	return werte.get(y)[x];
+    public boolean gibZellzustand(int x, int y) {
+	return zeilenMitZellen.get(y)[x];
     }
 
-    public int gebeZeilenAnzahl() {
-	return werte.size();
+    public int gibYDimension() {
+	return zeilenMitZellen.size();
     }
 
     public void setzeZustand(boolean zustand, int x, int y) {
-	werte.get(y)[x] = zustand;
+	zeilenMitZellen.get(y)[x] = zustand;
     }
 }

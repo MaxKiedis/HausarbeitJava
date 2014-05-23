@@ -22,7 +22,6 @@ public class Standard extends Spielmodus {
 	case 7:
 	case 8:
 	    return false;
-
 	default:
 	    return false;
 	}

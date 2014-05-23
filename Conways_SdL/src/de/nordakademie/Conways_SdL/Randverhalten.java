@@ -9,7 +9,7 @@ public class Randverhalten {
 	return neuesFeld;
     }
 
-    public Spielfeld abziehenRand(Spielfeld letztesFeld) {
+    public Spielfeld anwendenRandverhalten(Spielfeld letztesFeld) {
 	return letztesFeld;
     }
 }

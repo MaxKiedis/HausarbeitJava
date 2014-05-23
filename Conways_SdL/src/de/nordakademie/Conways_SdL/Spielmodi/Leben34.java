@@ -1,6 +1,5 @@
 package de.nordakademie.Conways_SdL.Spielmodi;
 
-
 import de.nordakademie.Conways_SdL.Spielmodus;
 
 public class Leben34 extends Spielmodus {
