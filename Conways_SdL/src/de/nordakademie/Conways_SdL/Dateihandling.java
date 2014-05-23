@@ -37,7 +37,7 @@ public final class Dateihandling {
      * @return ausgelesenes Spielfeld
      */
     public static Spielfeld einlesenSpielfeld(final String dateiname) {
-	ArrayList<boolean[]> zellwerte = new ArrayList<boolean[]>();
+	ArrayList<boolean[]> zellwerte = null;
 	File datei = new File(System.getProperty("user.home")
 		+ "//spiel_des_lebens//" + dateiname + ".start");
 
@@ -74,8 +74,8 @@ public final class Dateihandling {
 		    }
 
 		    // Pruefe Zeilenanzahl
-		    if (spielfeld != null
-			    && spielfeld.gibYDimension() >= MAXIMAL_Y_DIMENSION) {
+		    if (zellwerte != null
+			    && zellwerte.size() >= MAXIMAL_Y_DIMENSION) {
 			Benutzerinterface
 				.zeigeInfoFenster("Das eingelesene Spielfeld besitzt zu "
 					+ "viele Zeilen!");
@@ -86,11 +86,11 @@ public final class Dateihandling {
 		    boolean[] konvertierteZeile = konvertiereZeile(eingeleseneZeile);
 
 		    // Spielfeld erzeugen oder Zeile anhaengen
-		    if (spielfeld == null) {
-			spielfeld = new Spielfeld(konvertierteZeile);
-		    } else if (konvertierteZeile.length == spielfeld
-			    .gibXDimension()) {
-			spielfeld.hinzufuegenZeile(konvertierteZeile);
+		    if (zellwerte == null) {
+			zellwerte = new ArrayList<boolean[]>();
+			zellwerte.add(konvertierteZeile);
+		    } else if (konvertierteZeile.length == zellwerte.get(0).length) {
+			zellwerte.add(konvertierteZeile);
 		    } else {
 			Benutzerinterface
 				.zeigeInfoFenster("Die Laenge der Zeilen stimmt nicht "
@@ -134,11 +134,11 @@ public final class Dateihandling {
 	    }
 	}
 
-	if (spielfeld == null) {
+	if (zellwerte == null) {
 	    Benutzerinterface.zeigeInfoFenster("Die Datei hat keinen Inhalt");
 	}
 
-	return spielfeld;
+	return new Spielfeld(zellwerte);
     }
 
     /**

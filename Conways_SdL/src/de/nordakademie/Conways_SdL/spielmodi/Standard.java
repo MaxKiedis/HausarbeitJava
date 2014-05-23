@@ -13,7 +13,7 @@ public class Standard extends Spielmodus {
      * 
      */
     public final boolean gibLebenszustandNaechsteRunde(final int nachbaranzahl,
-	    boolean lebenszustand) {
+	    final boolean lebenszustand) {
 	switch (nachbaranzahl) {
 	case 0:
 	case 1:

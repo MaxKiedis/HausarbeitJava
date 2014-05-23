@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * 
  * @author Moritz Vetter
- *
+ * 
  */
 public class Spielfeld {
 
@@ -13,36 +13,25 @@ public class Spielfeld {
     private ArrayList<boolean[]> zustaendeZellen;
 
     /**
-     * Erstellt ein Spielfeld mithilfe einer Array.
-     * 
-     * @param zeile konvertierte Zeile (Format: Boolean Array)
-     */
-    public Spielfeld(final boolean[] zeile) {
-	zustaendeZellen = new ArrayList<boolean[]>();
-	zustaendeZellen.add(zeile);
-    }
-
-    /**
+     * Konstruktor fuer ein Spielfeld.
      * 
      * @param zeilenMitZellen
+     *            Zellwahrheitswerte (Lebenszustaende der einzelnen Zellen)
      */
     public Spielfeld(final ArrayList<boolean[]> zeilenMitZellen) {
-	this.zustaendeZellen = zeilenMitZellen;
+	zustaendeZellen = zeilenMitZellen;
     }
 
     /**
-     * 
-     * @param zeile
-     */
-    public final void hinzufuegenZeile(final boolean[] zeile) {
-	zustaendeZellen.add(zeile);
-    }
-
-    /**
+     * Ermittelt die naechste Gemeration anhand des gewaehlten Randverhalten und
+     * Spielmodus, indem fuer jede einzelne Zelle die Nachbaranzahl ermittelt
+     * wird.
      * 
      * @param randverhalten
+     *            das ausgewaehlte Randverhalten
      * @param modus
-     * @return
+     *            der ausgewaehlte Spielmodus
+     * @return Spielfeld der naechsten Generation
      */
     public final Spielfeld entwickleGeneration(
 	    final Randverhalten randverhalten, final Spielmodus modus) {
@@ -61,33 +50,41 @@ public class Spielfeld {
     }
 
     /**
+     * Gibt die Anzahl der Spalten zurueck.
      * 
-     * @return
+     * @return Spaltenanzahl
      */
     public final int gibXDimension() {
 	return zustaendeZellen.get(0).length;
     }
 
     /**
+     * Gibt die Anzahl der Zeilen zurueck.
      * 
-     * @return
+     * @return Zeilenanzahl
      */
     public final int gibYDimension() {
 	return zustaendeZellen.size();
     }
 
     /**
+     * ueberprueft den Zustand benachbarter Zellen und addiert die lebendigen
+     * Zellen zusammen.
      * 
      * @param x
+     *            x-koordinate der Zelle fuer die die Nachbarzahl ermittelt
+     *            wird.
      * @param y
-     * @return
+     *            y-koordinate der Zelle fuer die die Nachbarzahl ermittelt
+     *            wird.
+     * @return Anzahl lebendiger Nachbarzellen
      */
     public final int gibNachbaranzahl(final int x, final int y) {
 	int currentX;
 	int currentY;
 	int nachbaranzahl = 0;
 
-	int startX = x - 1;
+	int startX = x - 1; //
 	int startY = y - 1;
 	if (startX < 0) {
 	    startX += gibXDimension();
@@ -121,9 +118,13 @@ public class Spielfeld {
     }
 
     /**
+     * Ueberprueft ob dieses Spielfeld mit dem uebergebenen Spielfeld
+     * uebereinstimmt.
      * 
      * @param spielfeld
-     * @return
+     *            das Spielfeld zu dem dieses Spielfeld verglichen werden soll.
+     * @return Wahrheitswert (wahr = die Spielfelder sind gleich; false = die
+     *         Spielfelder sind nicht gleich)
      */
     public final boolean istGleichesSpielfeld(final Spielfeld spielfeld) {
 	for (int i = 0; i < spielfeld.gibYDimension(); i++) {
@@ -137,20 +138,27 @@ public class Spielfeld {
     }
 
     /**
+     * Gibt zurueck ob die Zelle lebendig oder tot ist.
      * 
      * @param x
+     *            x-koordinate der Zelle
      * @param y
-     * @return
+     *            y-koordinate der Zelle
+     * @return Wahrheitswerte (lebt = true; tot = false)
      */
     public final boolean gibZellzustand(final int x, final int y) {
 	return zustaendeZellen.get(y)[x];
     }
 
     /**
+     * Legt fuer eine Zelle fest ob sie lebt oder tot ist.
      * 
      * @param zustand
+     *            Wahrheitswert (lebt = true; tot = false)
      * @param x
+     *            x-koordinate der Zelle
      * @param y
+     *            y-koordinate der Zelle
      */
     public final void setzeZellzustand(final boolean zustand, final int x,
 	    final int y) {
