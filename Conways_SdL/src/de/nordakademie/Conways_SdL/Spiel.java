@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 
 import de.nordakademie.Conways_SdL.raender.MauerDesTodes;
 import de.nordakademie.Conways_SdL.raender.PackmanUniversum;
@@ -24,7 +23,7 @@ public class Spiel {
     /**     */
     private String dateiname;
     /**     */
-    private final ArrayList<Spielfeld> vergangeneSpielfelder;
+    private ArrayList<Spielfeld> vergangeneSpielfelder;
     /**     */
     private Spielmodus modus;
     /**     */
@@ -86,7 +85,7 @@ public class Spiel {
 
 	// Passe das Randverhalten fuer das eingelesene Spielfeld an
 	vergangeneSpielfelder = new ArrayList<Spielfeld>();
-	final Spielfeld angepasstesSpielfeld = randverhalten
+	Spielfeld angepasstesSpielfeld = randverhalten
 		.initialisierenRandverhalten(importiertesSpielfeld);
 
 	// Das angepasste Feld zur ArrayList hinzufuegen
@@ -98,7 +97,7 @@ public class Spiel {
      * @param args
      */
     public static void main(final String[] args) {
-	final Spiel spiel = new Spiel();
+	Spiel spiel = new Spiel();
 	spiel.starten();
     }
 
@@ -116,7 +115,7 @@ public class Spiel {
 	// Dies ist der Algorithmus zum entwickeln der Spielfelder
 	do {
 	    anzahlGenerationen++;
-	    final Spielfeld spielfeldNeueGeneration = spielfeldAlteGeneration
+	    Spielfeld spielfeldNeueGeneration = spielfeldAlteGeneration
 		    .entwickleGeneration(randverhalten, modus);
 	    spielfeldAlteGeneration = spielfeldNeueGeneration;
 	    labelAnzahlGenerationen
@@ -158,9 +157,9 @@ public class Spiel {
      */
     private void zeigeLadebalken() {
 	ladebalkenFenster = new JFrame("Working...");
-	final ImageIcon loading = new ImageIcon("img/spinner.gif");
+	ImageIcon loading = new ImageIcon("img/spinner.gif");
 	labelAnzahlGenerationen = new JLabel("Generation: 1", loading,
-		SwingConstants.CENTER);
+		JLabel.CENTER);
 	ladebalkenFenster.add(labelAnzahlGenerationen);
 	ladebalkenFenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	ladebalkenFenster.setSize(300, 60);

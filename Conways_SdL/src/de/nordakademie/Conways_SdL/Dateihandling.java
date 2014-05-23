@@ -38,19 +38,19 @@ public final class Dateihandling {
      */
     public static Spielfeld einlesenSpielfeld(final String dateiname) {
 	ArrayList<boolean[]> zellwerte = null;
-	final File datei = new File(System.getProperty("user.home")
+	File datei = new File(System.getProperty("user.home")
 		+ "//spiel_des_lebens//" + dateiname + ".start");
 
 	FileReader fileReader = null;
 	BufferedReader bufferedReader = null;
-	final Spielfeld spielfeld = null;
+	Spielfeld spielfeld = null;
 
 	try {
 	    fileReader = new FileReader(datei);
 	    bufferedReader = new BufferedReader(fileReader);
 
 	    while (bufferedReader.ready()) {
-		final String eingeleseneZeile = bufferedReader.readLine();
+		String eingeleseneZeile = bufferedReader.readLine();
 
 		// Nullcheck (laut Findbugs)
 		if (eingeleseneZeile != null) {
@@ -83,7 +83,7 @@ public final class Dateihandling {
 		    }
 
 		    // Zeile Konvertieren
-		    final boolean[] konvertierteZeile = konvertiereZeile(eingeleseneZeile);
+		    boolean[] konvertierteZeile = konvertiereZeile(eingeleseneZeile);
 
 		    // Spielfeld erzeugen oder Zeile anhaengen
 		    if (zellwerte == null) {
@@ -100,12 +100,12 @@ public final class Dateihandling {
 		}
 	    }
 
-	} catch (final FileNotFoundException e) {
+	} catch (FileNotFoundException e) {
 	    Benutzerinterface
 		    .zeigeInfoFenster("Die Datei bzw. der Pfad existieren nicht! Bitte "
 			    + "geben sie den Dateinamen erneut ein.");
 	    return null;
-	} catch (final IOException e) {
+	} catch (IOException e) {
 	    Benutzerinterface
 		    .zeigeInfoFenster("Es ist ein Fehler beim Einlesen der Datei "
 			    + "aufgetreten. Bitte geben sie den Dateinamen erneut ein.");
@@ -114,7 +114,7 @@ public final class Dateihandling {
 	    if (fileReader != null) {
 		try {
 		    fileReader.close();
-		} catch (final IOException e) {
+		} catch (IOException e) {
 		    Benutzerinterface
 			    .zeigeInfoFenster("Es ist ein Fehler beim Einlesen der Datei "
 				    + "aufgetreten. Bitte geben sie den Dateinamen erneut "
@@ -125,7 +125,7 @@ public final class Dateihandling {
 	    if (bufferedReader != null) {
 		try {
 		    bufferedReader.close();
-		} catch (final IOException e) {
+		} catch (IOException e) {
 		    Benutzerinterface
 			    .zeigeInfoFenster("Es ist ein Fehler beim Einlesen der Datei "
 				    + "aufgetreten. Bitte geben sie den Dateinamen erneut "
@@ -166,7 +166,7 @@ public final class Dateihandling {
      * @return boolean-Array
      */
     private static boolean[] konvertiereZeile(final String zeile) {
-	final boolean[] werte = new boolean[zeile.length()];
+	boolean[] werte = new boolean[zeile.length()];
 
 	for (int i = 0; i < zeile.length(); i++) {
 	    if (zeile.charAt(i) == 'X') {
@@ -193,7 +193,7 @@ public final class Dateihandling {
     public static void speichernEndzustand(final Spielfeld spielfeld,
 	    final int anzahlGenerationen, final Randverhalten randverhalten,
 	    final String dateiname) {
-	final File datei = new File(System.getProperty("user.home")
+	File datei = new File(System.getProperty("user.home")
 		+ "//spiel_des_lebens//" + dateiname + ".ende");
 
 	FileOutputStream fileOutput = null;
@@ -206,7 +206,7 @@ public final class Dateihandling {
 	    dateiAusgabe.println("Die Ausgabe ist statisch nach "
 		    + anzahlGenerationen + " Generationen!");
 	    dateiAusgabe.println();
-	    final Spielfeld feld = randverhalten.abschliessenRandverhalten(spielfeld);
+	    Spielfeld feld = randverhalten.abschliessenRandverhalten(spielfeld);
 
 	    for (int i = 0; i < feld.gibYDimension(); i++) {
 		for (int j = 0; j < feld.gibXDimension(); j++) {
@@ -218,7 +218,7 @@ public final class Dateihandling {
 		}
 		dateiAusgabe.println();
 	    }
-	} catch (final FileNotFoundException e) {
+	} catch (FileNotFoundException e) {
 	    Benutzerinterface
 		    .zeigeInfoFenster("Die Datei wurde nicht gefunden (Fehler)! "
 			    + "Sie wurde nicht gespeichert!");
@@ -226,7 +226,7 @@ public final class Dateihandling {
 	    if (fileOutput != null) {
 		try {
 		    fileOutput.close();
-		} catch (final IOException e) {
+		} catch (IOException e) {
 		    Benutzerinterface
 			    .zeigeInfoFenster("Fehler beim FileOutput");
 		}
