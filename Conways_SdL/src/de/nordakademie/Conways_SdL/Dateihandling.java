@@ -13,7 +13,7 @@ public class Dateihandling {
     private static final int MAXIMAL_X = 100;
     private static final int MAXIMAL_Y = 100;
 
-    public static Spielfeld leseSpielfeldAusDatei(final String dateiname) {
+    public static Spielfeld leseSpielfeldAusDatei(String dateiname) {
 	File datei = new File(System.getProperty("user.home")
 		+ "//spiel_des_lebens//" + dateiname + ".start");
 
@@ -101,6 +101,11 @@ public class Dateihandling {
 		}
 	    }
 	}
+
+	if (spielfeld == null) {
+	    Benutzerdialoge.zeigeFehlermeldung("Die Datei hat keinen Inhalt");
+	}
+
 	return spielfeld;
     }
 

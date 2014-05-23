@@ -22,7 +22,8 @@ public class Spiel {
 	    // Abfrage Dateipfad
 	    dateiname = Benutzerdialoge.zeigePfadeingabe();
 	    // Laden der Datei
-	    importiertesSpielfeld = Dateihandling.leseSpielfeldAusDatei(dateiname);
+	    importiertesSpielfeld = Dateihandling
+		    .leseSpielfeldAusDatei(dateiname);
 	} while (importiertesSpielfeld == null);
 
 	// Waehlen des Spielmodus
@@ -65,7 +66,8 @@ public class Spiel {
 
 	// Passe das Randverhalten fuer das eingelesene Spielfeld an
 	vergangeneSpielfelder = new ArrayList<Spielfeld>();
-	Spielfeld angepasstesSpielfeld = randverhalten.anlegenRand(importiertesSpielfeld);
+	Spielfeld angepasstesSpielfeld = randverhalten
+		.anlegenRand(importiertesSpielfeld);
 
 	// Das angepasste Feld zur ArrayList hinzufuegen
 	vergangeneSpielfelder.add(angepasstesSpielfeld);
@@ -73,6 +75,7 @@ public class Spiel {
     }
 
     public final void starten() {
+
 	// Eingelesenes Spielfeld als Startzustand definieren
 	Spielfeld spielfeldAlteGeneration = vergangeneSpielfelder.get(0);
 	int anzahlGenerationen = 0;
@@ -80,7 +83,8 @@ public class Spiel {
 	// Dies ist der Algorithmus zum entwickeln der Spielfelder
 	do {
 	    anzahlGenerationen++;
-	    Spielfeld spielfeldNeueGeneration = entwickleGeneration(spielfeldAlteGeneration, randverhalten);
+	    Spielfeld spielfeldNeueGeneration = entwickleGeneration(
+		    spielfeldAlteGeneration, randverhalten);
 	    spielfeldAlteGeneration = spielfeldNeueGeneration;
 	    System.out.println();
 	    System.out.println("Runde " + anzahlGenerationen);
@@ -88,25 +92,31 @@ public class Spiel {
 	} while (!istDublette(spielfeldAlteGeneration));
 
 	// statisch oder zyklisch
-	if (istGleichesSpielfeld(spielfeldAlteGeneration, vergangeneSpielfelder.get(vergangeneSpielfelder.size() - 1))) {
-	    Dateihandling.speichereEndzustand(spielfeldAlteGeneration, anzahlGenerationen, randverhalten, dateiname);
+	if (istGleichesSpielfeld(spielfeldAlteGeneration,
+		vergangeneSpielfelder.get(vergangeneSpielfelder.size() - 1))) {
+	    Dateihandling.speichereEndzustand(spielfeldAlteGeneration,
+		    anzahlGenerationen, randverhalten, dateiname);
 	} else {
-	    Benutzerdialoge.zeigeInfoFenster("Der Zustand ist zyklisch. Erreicht nach " + anzahlGenerationen
-		    + " Generationen");
+	    Benutzerdialoge
+		    .zeigeInfoFenster("Der Zustand ist zyklisch. Erreicht nach "
+			    + anzahlGenerationen + " Generationen");
 	}
     }
 
-    private Spielfeld entwickleGeneration(final Spielfeld altesSpielfeld, final Randverhalten randverhalten) {
+    private Spielfeld entwickleGeneration(final Spielfeld altesSpielfeld,
+	    final Randverhalten randverhalten) {
 	ArrayList<boolean[]> werteFuerSpielfeld = new ArrayList<boolean[]>();
 	for (int i = 0; i < altesSpielfeld.gibYDimension(); i++) {
 	    boolean[] zeile = new boolean[altesSpielfeld.gibXDimension()];
 	    for (int j = 0; j < altesSpielfeld.gibXDimension(); j++) {
-		zeile[j] = modus.gibLebenszustandNaechsteRunde(altesSpielfeld.gibNachbaranzahl(j, i),
+		zeile[j] = modus.gibLebenszustandNaechsteRunde(
+			altesSpielfeld.gibNachbaranzahl(j, i),
 			altesSpielfeld.gibZellzustand(j, i));
 	    }
 	    werteFuerSpielfeld.add(zeile);
 	}
-	Spielfeld neuesSpielfeld = randverhalten.setzeRand(new Spielfeld(werteFuerSpielfeld));
+	Spielfeld neuesSpielfeld = randverhalten.setzeRand(new Spielfeld(
+		werteFuerSpielfeld));
 	return neuesSpielfeld;
     }
 
@@ -120,10 +130,12 @@ public class Spiel {
 	return false;
     }
 
-    private boolean istGleichesSpielfeld(final Spielfeld spielfeld, final Spielfeld neuesFeld) {
+    private boolean istGleichesSpielfeld(final Spielfeld spielfeld,
+	    final Spielfeld neuesFeld) {
 	for (int i = 0; i < spielfeld.gibYDimension(); i++) {
 	    for (int j = 0; j < spielfeld.gibXDimension(); j++) {
-		if (spielfeld.gibZellzustand(j, i) != neuesFeld.gibZellzustand(j, i)) {
+		if (spielfeld.gibZellzustand(j, i) != neuesFeld.gibZellzustand(
+			j, i)) {
 		    return false;
 		}
 	    }
