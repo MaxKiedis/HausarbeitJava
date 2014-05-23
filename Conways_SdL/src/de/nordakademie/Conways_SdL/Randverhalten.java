@@ -1,15 +1,9 @@
 package de.nordakademie.Conways_SdL;
 
-public class Randverhalten {
-    public Spielfeld anlegenRand(Spielfeld spielfeld) {
-	return spielfeld;
-    }
+public abstract class Randverhalten {
+    public abstract Spielfeld anlegenRand(final Spielfeld spielfeld);
 
-    public Spielfeld setzeRand(Spielfeld neuesFeld) {
-	return neuesFeld;
-    }
+    public abstract Spielfeld setzeRand(final Spielfeld neuesFeld);
 
-    public Spielfeld anwendenRandverhalten(Spielfeld letztesFeld) {
-	return letztesFeld;
-    }
+    public abstract Spielfeld anwendenRandverhalten(final Spielfeld letztesFeld);
 }

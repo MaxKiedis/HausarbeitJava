@@ -10,8 +10,12 @@ import java.io.PrintStream;
 
 public class Dateihandling {
 
-    public static Spielfeld leseSpielfeldAusDatei(String dateiname) {
-	File datei = new File(System.getProperty("user.home") + "//spiel_des_lebens//" + dateiname + ".start");
+    private static final int MAXIMAL_X = 100;
+    private static final int MAXIMAL_Y = 100;
+
+    public static Spielfeld leseSpielfeldAusDatei(final String dateiname) {
+	File datei = new File(System.getProperty("user.home")
+		+ "//spiel_des_lebens//" + dateiname + ".start");
 
 	FileReader fileReader = null;
 	BufferedReader bufferedReader = null;
@@ -29,22 +33,27 @@ public class Dateihandling {
 
 		    // Pruefe Inhalt
 		    if (hatVerboteneZeichen(eingeleseneZeile)) {
-			Benutzerdialoge.zeigeFehlermeldung("Es sind verbotene Zeichen in der Datei!");
+			Benutzerdialoge
+				.zeigeFehlermeldung("Es sind verbotene Zeichen in der Datei!");
 			return null;
 		    }
 		    // Pruefe Zeilenformat
-		    if (eingeleseneZeile.length() > 100) {
-			Benutzerdialoge.zeigeFehlermeldung("Eine Zeile hat zu viele Spalten.");
+		    if (eingeleseneZeile.length() > MAXIMAL_X) {
+			Benutzerdialoge
+				.zeigeFehlermeldung("Eine Zeile hat zu viele Spalten.");
 			return null;
 		    }
 		    if (eingeleseneZeile.length() == 0) {
-			Benutzerdialoge.zeigeFehlermeldung("Eine eingegebene Zeile hat keine Zeichen.");
+			Benutzerdialoge
+				.zeigeFehlermeldung("Eine eingegebene Zeile hat keine Zeichen.");
 			return null;
 		    }
 
 		    // Pruefe Zeilenanzahl
-		    if (spielfeld != null && spielfeld.gibYDimension() >= 100) {
-			Benutzerdialoge.zeigeFehlermeldung("Das eingelesene Spielfeld besitzt zu viele Zeilen!");
+		    if (spielfeld != null
+			    && spielfeld.gibYDimension() >= MAXIMAL_Y) {
+			Benutzerdialoge
+				.zeigeFehlermeldung("Das eingelesene Spielfeld besitzt zu viele Zeilen!");
 			return null;
 		    }
 
@@ -54,10 +63,12 @@ public class Dateihandling {
 		    // Spielfeld erzeugen oder Zeile anhaengen
 		    if (spielfeld == null) {
 			spielfeld = new Spielfeld(konvertierteZeile);
-		    } else if (konvertierteZeile.length == spielfeld.gibXDimension()) {
+		    } else if (konvertierteZeile.length == spielfeld
+			    .gibXDimension()) {
 			spielfeld.hinzufuegenZeile(konvertierteZeile);
 		    } else {
-			Benutzerdialoge.zeigeFehlermeldung("Die Laenge der Zeilen stimmt nicht ueberein!");
+			Benutzerdialoge
+				.zeigeFehlermeldung("Die Laenge der Zeilen stimmt nicht ueberein!");
 			return null;
 		    }
 		}
@@ -72,23 +83,29 @@ public class Dateihandling {
 		    .zeigeFehlermeldung("Es ist ein Fehler beim Einlesen der Datei aufgetreten. Bitte geben sie den Dateinamen erneut ein.");
 	    return null;
 	} finally {
-	    if (fileReader != null)
+	    if (fileReader != null) {
 		try {
 		    fileReader.close();
 		} catch (IOException e) {
+		    Benutzerdialoge
+			    .zeigeFehlermeldung("Es ist ein Fehler beim Einlesen der Datei aufgetreten. Bitte geben sie den Dateinamen erneut ein.");
 		}
+	    }
 
-	    if (bufferedReader != null)
+	    if (bufferedReader != null) {
 		try {
 		    bufferedReader.close();
 		} catch (IOException e) {
+		    Benutzerdialoge
+			    .zeigeFehlermeldung("Es ist ein Fehler beim Einlesen der Datei aufgetreten. Bitte geben sie den Dateinamen erneut ein.");
 		}
+	    }
 	}
 	return spielfeld;
     }
 
-    private static boolean[] konvertiereZeile(String zeile) {
-	boolean werte[] = new boolean[zeile.length()];
+    private static boolean[] konvertiereZeile(final String zeile) {
+	boolean[] werte = new boolean[zeile.length()];
 
 	for (int i = 0; i < zeile.length(); i++) {
 	    if (zeile.charAt(i) == 'X') {
@@ -100,7 +117,7 @@ public class Dateihandling {
 	return werte;
     }
 
-    private static boolean hatVerboteneZeichen(String zeile) {
+    private static boolean hatVerboteneZeichen(final String zeile) {
 	for (int i = 0; i < zeile.length(); i++) {
 	    if (zeile.charAt(i) != 'X' && zeile.charAt(i) != 'O') {
 		return true;
@@ -109,9 +126,11 @@ public class Dateihandling {
 	return false;
     }
 
-    public static void speichereEndzustand(Spielfeld spielfeld, int anzahlGenerationen, Randverhalten randverhalten,
-	    String dateiname) {
-	File datei = new File(System.getProperty("user.home") + "//spiel_des_lebens//" + dateiname + ".ende");
+    public static void speichereEndzustand(final Spielfeld spielfeld,
+	    final int anzahlGenerationen, final Randverhalten randverhalten,
+	    final String dateiname) {
+	File datei = new File(System.getProperty("user.home")
+		+ "//spiel_des_lebens//" + dateiname + ".ende");
 
 	FileOutputStream fileOutput = null;
 	PrintStream dateiAusgabe = null;
@@ -120,7 +139,8 @@ public class Dateihandling {
 	    fileOutput = new FileOutputStream(datei);
 	    dateiAusgabe = new PrintStream(fileOutput);
 
-	    dateiAusgabe.println("Die Ausgabe ist statisch nach " + anzahlGenerationen + " Generationen!");
+	    dateiAusgabe.println("Die Ausgabe ist statisch nach "
+		    + anzahlGenerationen + " Generationen!");
 	    dateiAusgabe.println();
 	    Spielfeld feld = randverhalten.anwendenRandverhalten(spielfeld);
 
@@ -135,15 +155,20 @@ public class Dateihandling {
 		dateiAusgabe.println();
 	    }
 	} catch (FileNotFoundException e) {
-	    Benutzerdialoge.zeigeFehlermeldung("Die Datei wurde nicht gefunden (Fehler)! Sie wurde nicht gespeichert!");
+	    Benutzerdialoge
+		    .zeigeFehlermeldung("Die Datei wurde nicht gefunden (Fehler)! Sie wurde nicht gespeichert!");
 	} finally {
-	    if (fileOutput != null)
+	    if (fileOutput != null) {
 		try {
 		    fileOutput.close();
 		} catch (IOException e) {
+		    Benutzerdialoge
+			    .zeigeFehlermeldung("Fehler beim FileOutput");
 		}
-	    if (dateiAusgabe != null)
+	    }
+	    if (dateiAusgabe != null) {
 		dateiAusgabe.close();
+	    }
 	}
     }
 }

@@ -1,7 +1,6 @@
 package de.nordakademie.Conways_SdL;
 
-public class Spielmodus {
-    public boolean gibLebenszustandNaechsteRunde(int nachbaranzahl, boolean derzeitigenLebenstand){
-	return false;
+public abstract class Spielmodus {
+    public abstract boolean gibLebenszustandNaechsteRunde(
+	    final int nachbaranzahl, final boolean derzeitigenLebenstand);
     }
-}

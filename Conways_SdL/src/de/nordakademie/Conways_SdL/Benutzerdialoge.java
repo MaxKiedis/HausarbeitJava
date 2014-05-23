@@ -15,11 +15,11 @@ public class Benutzerdialoge {
 	return input;
     }
 
-    public static void zeigeFehlermeldung(String message) {
+    public static void zeigeFehlermeldung(final String message) {
 	JOptionPane.showMessageDialog(null, message);
     }
 
-    public static void zeigeInfoFenster(String message) {
+    public static void zeigeInfoFenster(final String message) {
 	JOptionPane.showMessageDialog(null, message);
     }
 
@@ -44,7 +44,7 @@ public class Benutzerdialoge {
 	return n;
     }
 
-    private static boolean istDateipfadLeer(String dateipfad) {
+    private static boolean istDateipfadLeer(final String dateipfad) {
 	if (dateipfad.equals("")) {
 	    Benutzerdialoge.zeigeFehlermeldung("Bitte geben sie einen Dateinamen ein!");
 	    return true;
@@ -52,7 +52,7 @@ public class Benutzerdialoge {
 	return false;
     }
 
-    private static String bereiteDateipfadAuf(String unverarbeiteterDateipfad) {
+    private static String bereiteDateipfadAuf(final String unverarbeiteterDateipfad) {
 	String verarbeiteterDateipfad = "";
 	for (int i = 0; i < unverarbeiteterDateipfad.length(); i++) {
 	    if (unverarbeiteterDateipfad.charAt(i) == '/') { // Abfrage fuer

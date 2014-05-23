@@ -3,17 +3,12 @@ package de.nordakademie.Conways_SdL.Spielmodi;
 import de.nordakademie.Conways_SdL.Spielmodus;
 
 public class Leben34 extends Spielmodus {
-    public boolean gibLebenszustandNaechsteRunde(int nachbaranzahl, boolean lebenszustand) {
+    public boolean gibLebenszustandNaechsteRunde(final int nachbaranzahl, final boolean lebenszustand) {
 	switch (nachbaranzahl) {
 	case 0:
 	case 1:
-	    return false;
 	case 2:
-	    if (lebenszustand) {
-		return true;
-	    } else {
-		return false;
-	    }
+	    return false;
 	case 3:
 	case 4:
 	    return true;

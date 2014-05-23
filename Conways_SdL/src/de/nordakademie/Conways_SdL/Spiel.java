@@ -72,7 +72,7 @@ public class Spiel {
 	vergangeneSpielfelder.get(0).schreibeSpielfeld();
     }
 
-    public void starten() {
+    public final void starten() {
 	// Eingelesenes Spielfeld als Startzustand definieren
 	Spielfeld spielfeldAlteGeneration = vergangeneSpielfelder.get(0);
 	int anzahlGenerationen = 0;
@@ -96,7 +96,7 @@ public class Spiel {
 	}
     }
 
-    private Spielfeld entwickleGeneration(Spielfeld altesSpielfeld, Randverhalten randverhalten) {
+    private Spielfeld entwickleGeneration(final Spielfeld altesSpielfeld, final Randverhalten randverhalten) {
 	ArrayList<boolean[]> werteFuerSpielfeld = new ArrayList<boolean[]>();
 	for (int i = 0; i < altesSpielfeld.gibYDimension(); i++) {
 	    boolean[] zeile = new boolean[altesSpielfeld.gibXDimension()];
@@ -110,7 +110,7 @@ public class Spiel {
 	return neuesSpielfeld;
     }
 
-    private boolean istDublette(Spielfeld spielfeld) {
+    private boolean istDublette(final Spielfeld spielfeld) {
 	for (int i = 0; i < vergangeneSpielfelder.size(); i++) {
 	    if (istGleichesSpielfeld(vergangeneSpielfelder.get(i), spielfeld)) {
 		return true;
@@ -120,7 +120,7 @@ public class Spiel {
 	return false;
     }
 
-    private boolean istGleichesSpielfeld(Spielfeld spielfeld, Spielfeld neuesFeld) {
+    private boolean istGleichesSpielfeld(final Spielfeld spielfeld, final Spielfeld neuesFeld) {
 	for (int i = 0; i < spielfeld.gibYDimension(); i++) {
 	    for (int j = 0; j < spielfeld.gibXDimension(); j++) {
 		if (spielfeld.gibZellzustand(j, i) != neuesFeld.gibZellzustand(j, i)) {
