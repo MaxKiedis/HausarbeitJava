@@ -23,40 +23,44 @@ public class Dateihandling {
 
 	    while (bufferedReader.ready()) {
 		String eingeleseneZeile = bufferedReader.readLine();
-		// Pruefe Inhalt
-		if (hatVerboteneZeichen(eingeleseneZeile)) {
-		    Benutzerdialoge.zeigeFehlermeldung("Es sind verbotene Zeichen in der Datei!");
-		    return null;
-		}
-		// Pruefe Zeilenformat
-		if (eingeleseneZeile.length() > 100) {
-		    Benutzerdialoge.zeigeFehlermeldung("Eine Zeile hat zu viele Spalten.");
-		    return null;
-		}
-		if (eingeleseneZeile.length() == 0) {
-		    Benutzerdialoge.zeigeFehlermeldung("Eine eingegebene Zeile hat keine Zeichen.");
-		    return null;
-		}
 
-		// Pruefe Zeilenanzahl
-		if (spielfeld != null && spielfeld.gibYDimension() >= 100) {
-		    Benutzerdialoge.zeigeFehlermeldung("Das eingelesene Spielfeld besitzt zu viele Zeilen!");
-		    return null;
+		// Nullcheck (laut Findbugs)
+		if (eingeleseneZeile != null) {
+
+		    // Pruefe Inhalt
+		    if (hatVerboteneZeichen(eingeleseneZeile)) {
+			Benutzerdialoge.zeigeFehlermeldung("Es sind verbotene Zeichen in der Datei!");
+			return null;
+		    }
+		    // Pruefe Zeilenformat
+		    if (eingeleseneZeile.length() > 100) {
+			Benutzerdialoge.zeigeFehlermeldung("Eine Zeile hat zu viele Spalten.");
+			return null;
+		    }
+		    if (eingeleseneZeile.length() == 0) {
+			Benutzerdialoge.zeigeFehlermeldung("Eine eingegebene Zeile hat keine Zeichen.");
+			return null;
+		    }
+
+		    // Pruefe Zeilenanzahl
+		    if (spielfeld != null && spielfeld.gibYDimension() >= 100) {
+			Benutzerdialoge.zeigeFehlermeldung("Das eingelesene Spielfeld besitzt zu viele Zeilen!");
+			return null;
+		    }
+
+		    // Zeile Konvertieren
+		    boolean[] konvertierteZeile = konvertiereZeile(eingeleseneZeile);
+
+		    // Spielfeld erzeugen oder Zeile anhaengen
+		    if (spielfeld == null) {
+			spielfeld = new Spielfeld(konvertierteZeile);
+		    } else if (konvertierteZeile.length == spielfeld.gibXDimension()) {
+			spielfeld.hinzufuegenZeile(konvertierteZeile);
+		    } else {
+			Benutzerdialoge.zeigeFehlermeldung("Die Laenge der Zeilen stimmt nicht ueberein!");
+			return null;
+		    }
 		}
-
-		// Zeile Konvertieren
-		boolean[] konvertierteZeile = konvertiereZeile(eingeleseneZeile);
-
-		// Spielfeld erzeugen oder Zeile anhaengen
-		if (spielfeld == null) {
-		    spielfeld = new Spielfeld(konvertierteZeile);
-		} else if (konvertierteZeile.length == spielfeld.gibXDimension()) {
-		    spielfeld.hinzufuegenZeile(konvertierteZeile);
-		} else {
-		    Benutzerdialoge.zeigeFehlermeldung("Die Laenge der Zeilen stimmt nicht ueberein!");
-		    return null;
-		}
-
 	    }
 
 	} catch (FileNotFoundException e) {
