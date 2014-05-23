@@ -12,16 +12,30 @@ import de.nordakademie.Conways_SdL.spielmodi.Leben34;
 import de.nordakademie.Conways_SdL.spielmodi.LebenOhneTod;
 import de.nordakademie.Conways_SdL.spielmodi.Standard;
 
+/**
+ * 
+ * @author Kai Neubauer
+ * 
+ */
 public class Spiel {
 
     // Variablen
+    /**     */
     private String dateiname;
+    /**     */
     private ArrayList<Spielfeld> vergangeneSpielfelder;
+    /**     */
     private Spielmodus modus;
+    /**     */
     private Randverhalten randverhalten;
+    /**     */
     private JFrame ladebalkenFenster;
+    /**     */
     private JLabel labelAnzahlGenerationen;
 
+    /**
+     * 
+     */
     Spiel() {
 	Spielfeld importiertesSpielfeld;
 	do {
@@ -78,11 +92,18 @@ public class Spiel {
 	vergangeneSpielfelder.add(angepasstesSpielfeld);
     }
 
+    /**
+     * 
+     * @param args
+     */
     public static void main(final String[] args) {
 	Spiel spiel = new Spiel();
 	spiel.starten();
     }
 
+    /**
+     * 
+     */
     public final void starten() {
 
 	zeigeLadebalken();
@@ -115,6 +136,11 @@ public class Spiel {
 	}
     }
 
+    /**
+     * 
+     * @param spielfeld
+     * @return
+     */
     private boolean istInVergangenenSpielfeldernVorhanden(
 	    final Spielfeld spielfeld) {
 	for (int i = 0; i < vergangeneSpielfelder.size(); i++) {
@@ -126,6 +152,9 @@ public class Spiel {
 	return false;
     }
 
+    /**
+     * 
+     */
     private void zeigeLadebalken() {
 	ladebalkenFenster = new JFrame("Working...");
 	ImageIcon loading = new ImageIcon("img/spinner.gif");
@@ -137,6 +166,9 @@ public class Spiel {
 	ladebalkenFenster.setVisible(true);
     }
 
+    /**
+     * 
+     */
     private void versteckeLadebalken() {
 	ladebalkenFenster.setVisible(false);
 	ladebalkenFenster.dispose();

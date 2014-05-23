@@ -2,8 +2,17 @@ package de.nordakademie.Conways_SdL.spielmodi;
 
 import de.nordakademie.Conways_SdL.Spielmodus;
 
+/**
+ * 
+ * @author Max Anthony
+ * 
+ */
 public class Standard extends Spielmodus {
-    public boolean gibLebenszustandNaechsteRunde(int nachbaranzahl,
+
+    /**
+     * 
+     */
+    public final boolean gibLebenszustandNaechsteRunde(final int nachbaranzahl,
 	    boolean lebenszustand) {
 	switch (nachbaranzahl) {
 	case 0:

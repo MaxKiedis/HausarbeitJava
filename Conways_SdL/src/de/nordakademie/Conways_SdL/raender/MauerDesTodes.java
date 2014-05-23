@@ -5,8 +5,16 @@ import java.util.ArrayList;
 import de.nordakademie.Conways_SdL.Randverhalten;
 import de.nordakademie.Conways_SdL.Spielfeld;
 
+/**
+ * 
+ * @author Max Anthony
+ *
+ */
 public class MauerDesTodes extends Randverhalten {
 
+    /**
+     * 
+     */
     public final Spielfeld bereinigenRandverhalten(final Spielfeld spielfeld) {
 	for (int i = 0; i < spielfeld.gibYDimension(); i++) {
 	    for (int j = 0; j < spielfeld.gibXDimension(); j++) {
@@ -19,6 +27,9 @@ public class MauerDesTodes extends Randverhalten {
 	return spielfeld;
     }
 
+    /**
+     * 
+     */
     public final Spielfeld initialisierenRandverhalten(final 
 	    Spielfeld spielfeld) {
 	ArrayList<boolean[]> zeilenSpielfeld = new ArrayList<boolean[]>();
@@ -49,6 +60,9 @@ public class MauerDesTodes extends Randverhalten {
 	return new Spielfeld(zeilenSpielfeld);
     }
 
+    /**
+     * 
+     */
     public final Spielfeld abschliessenRandverhalten(final 
 	    Spielfeld spielfeld) {
 	ArrayList<boolean[]> zeilenSpielfeld = new ArrayList<boolean[]>();

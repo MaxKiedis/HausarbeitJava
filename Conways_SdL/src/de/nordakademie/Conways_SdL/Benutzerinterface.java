@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 /**
  * Stellt Funktionen zur grafischen Benutzerinteraktion bereit.
  * 
- * @author kaineubauer
+ * @author Kai Neubauer
  */
 public final class Benutzerinterface {
 

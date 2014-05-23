@@ -2,7 +2,16 @@ package de.nordakademie.Conways_SdL.spielmodi;
 
 import de.nordakademie.Conways_SdL.Spielmodus;
 
+/**
+ * 
+ * @author Max Anthony
+ *
+ */
 public class Leben34 extends Spielmodus {
+    
+    /**
+     * 
+     */
     public final boolean gibLebenszustandNaechsteRunde(final 
 	    int nachbaranzahl, final boolean lebenszustand) {
 	switch (nachbaranzahl) {
