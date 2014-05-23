@@ -2,6 +2,10 @@ package de.nordakademie.Conways_SdL;
 
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 import de.nordakademie.Conways_SdL.RandverhaltenSammlung.MauerDesTodes;
 import de.nordakademie.Conways_SdL.RandverhaltenSammlung.PackmanUniversum;
 import de.nordakademie.Conways_SdL.Spielmodi.Leben34;
@@ -15,6 +19,8 @@ public class Spiel {
     private Spielmodus modus;
     private Randverhalten randverhalten;
     private String dateiname;
+    private JFrame loaderWindow;
+    private JLabel gen_counter;
 
     Spiel() {
 	Spielfeld importiertesSpielfeld;
@@ -71,10 +77,11 @@ public class Spiel {
 
 	// Das angepasste Feld zur ArrayList hinzufuegen
 	vergangeneSpielfelder.add(angepasstesSpielfeld);
-	vergangeneSpielfelder.get(0).schreibeSpielfeld();
     }
 
     public final void starten() {
+
+	showLoaderWindow();
 
 	// Eingelesenes Spielfeld als Startzustand definieren
 	Spielfeld spielfeldAlteGeneration = vergangeneSpielfelder.get(0);
@@ -86,10 +93,10 @@ public class Spiel {
 	    Spielfeld spielfeldNeueGeneration = entwickleGeneration(
 		    spielfeldAlteGeneration, randverhalten);
 	    spielfeldAlteGeneration = spielfeldNeueGeneration;
-	    System.out.println();
-	    System.out.println("Runde " + anzahlGenerationen);
-	    spielfeldAlteGeneration.schreibeSpielfeld();
+	    gen_counter.setText("Generation: " + anzahlGenerationen);
 	} while (!istDublette(spielfeldAlteGeneration));
+
+	hideLoaderWindow();
 
 	// statisch oder zyklisch
 	if (istGleichesSpielfeld(spielfeldAlteGeneration,
@@ -101,6 +108,7 @@ public class Spiel {
 		    .zeigeInfoFenster("Der Zustand ist zyklisch. Erreicht nach "
 			    + anzahlGenerationen + " Generationen");
 	}
+	System.exit(0);
     }
 
     private Spielfeld entwickleGeneration(final Spielfeld altesSpielfeld,
@@ -141,5 +149,21 @@ public class Spiel {
 	    }
 	}
 	return true;
+    }
+
+    private void showLoaderWindow() {
+	loaderWindow = new JFrame("Working...");
+
+	ImageIcon loading = new ImageIcon("img/spinner.gif");
+	gen_counter = new JLabel("Generation: 1", loading, JLabel.CENTER);
+	loaderWindow.add(gen_counter);
+
+	loaderWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	loaderWindow.setSize(300, 60);
+	loaderWindow.setVisible(true);
+    }
+
+    private void hideLoaderWindow() {
+	loaderWindow.setVisible(false);
     }
 }

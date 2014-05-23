@@ -23,19 +23,6 @@ public class Spielfeld {
 	return zeilenMitZellen.get(0).length;
     }
 
-    public final void schreibeSpielfeld() {
-	for (int i = 0; i < zeilenMitZellen.size(); i++) {
-	    for (int j = 0; j < zeilenMitZellen.get(i).length; j++) {
-		if (zeilenMitZellen.get(i)[j]) {
-		    System.out.print("O");
-		} else {
-		    System.out.print("X");
-		}
-	    }
-	    System.out.println();
-	}
-    }
-
     public final int gibNachbaranzahl(final int x, final int y) {
 	int currentX;
 	int currentY;
