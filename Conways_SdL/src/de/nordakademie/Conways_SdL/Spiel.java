@@ -78,6 +78,11 @@ public class Spiel {
 	vergangeneSpielfelder.add(angepasstesSpielfeld);
     }
 
+    public static void main(final String[] args) {
+	Spiel spiel = new Spiel();
+	spiel.starten();
+    }
+
     public final void starten() {
 
 	zeigeLadebalken();

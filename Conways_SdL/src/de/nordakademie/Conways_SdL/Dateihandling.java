@@ -13,7 +13,7 @@ import java.io.PrintStream;
  * 
  * @author kaineubauer
  */
-public class Dateihandling {
+public final class Dateihandling {
 
     /**
      * 
@@ -23,12 +23,12 @@ public class Dateihandling {
     private static final int MAXIMAL_Y_DIMENSION = 100;
 
     /**
-     * Privater Konstruktor, da niemand Objekte erzeugen sollte
+     * Privater Konstruktor, da niemand Objekte erzeugen sollte.
      */
     private Dateihandling() {
     }
 
-    public static Spielfeld einlesenSpielfeld(String dateiname) {
+    public static Spielfeld einlesenSpielfeld(final String dateiname) {
 	File datei = new File(System.getProperty("user.home")
 		+ "//spiel_des_lebens//" + dateiname + ".start");
 
@@ -68,7 +68,8 @@ public class Dateihandling {
 		    if (spielfeld != null
 			    && spielfeld.gibYDimension() >= MAXIMAL_Y_DIMENSION) {
 			Benutzerinterface
-				.zeigeInfoFenster("Das eingelesene Spielfeld besitzt zu viele Zeilen!");
+				.zeigeInfoFenster("Das eingelesene Spielfeld besitzt zu "
+					+ "viele Zeilen!");
 			return null;
 		    }
 
@@ -83,7 +84,8 @@ public class Dateihandling {
 			spielfeld.hinzufuegenZeile(konvertierteZeile);
 		    } else {
 			Benutzerinterface
-				.zeigeInfoFenster("Die Laenge der Zeilen stimmt nicht ueberein!");
+				.zeigeInfoFenster("Die Laenge der Zeilen stimmt nicht "
+					+ "ueberein!");
 			return null;
 		    }
 		}
@@ -91,11 +93,13 @@ public class Dateihandling {
 
 	} catch (FileNotFoundException e) {
 	    Benutzerinterface
-		    .zeigeInfoFenster("Die Datei bzw. der Pfad existieren nicht! Bitte geben sie den Dateinamen erneut ein.");
+		    .zeigeInfoFenster("Die Datei bzw. der Pfad existieren nicht! Bitte "
+		    	+ "geben sie den Dateinamen erneut ein.");
 	    return null;
 	} catch (IOException e) {
 	    Benutzerinterface
-		    .zeigeInfoFenster("Es ist ein Fehler beim Einlesen der Datei aufgetreten. Bitte geben sie den Dateinamen erneut ein.");
+		    .zeigeInfoFenster("Es ist ein Fehler beim Einlesen der Datei "
+		    	+ "aufgetreten. Bitte geben sie den Dateinamen erneut ein.");
 	    return null;
 	} finally {
 	    if (fileReader != null) {
@@ -103,7 +107,9 @@ public class Dateihandling {
 		    fileReader.close();
 		} catch (IOException e) {
 		    Benutzerinterface
-			    .zeigeInfoFenster("Es ist ein Fehler beim Einlesen der Datei aufgetreten. Bitte geben sie den Dateinamen erneut ein.");
+			    .zeigeInfoFenster("Es ist ein Fehler beim Einlesen der Datei "
+			    	+ "aufgetreten. Bitte geben sie den Dateinamen erneut "
+			    	+ "ein.");
 		}
 	    }
 
@@ -112,7 +118,9 @@ public class Dateihandling {
 		    bufferedReader.close();
 		} catch (IOException e) {
 		    Benutzerinterface
-			    .zeigeInfoFenster("Es ist ein Fehler beim Einlesen der Datei aufgetreten. Bitte geben sie den Dateinamen erneut ein.");
+			    .zeigeInfoFenster("Es ist ein Fehler beim Einlesen der Datei "
+			    	+ "aufgetreten. Bitte geben sie den Dateinamen erneut "
+			    	+ "ein.");
 		}
 	    }
 	}
@@ -163,7 +171,8 @@ public class Dateihandling {
             }
         } catch (FileNotFoundException e) {
             Benutzerinterface
-        	    .zeigeInfoFenster("Die Datei wurde nicht gefunden (Fehler)! Sie wurde nicht gespeichert!");
+        	    .zeigeInfoFenster("Die Datei wurde nicht gefunden (Fehler)! "
+        	    	+ "Sie wurde nicht gespeichert!");
         } finally {
             if (fileOutput != null) {
         	try {

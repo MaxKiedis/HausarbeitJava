@@ -22,7 +22,7 @@ public final class Benutzerinterface {
      *            anzuzeigender String
      */
     public static void zeigeInfoFenster(final String message) {
-        JOptionPane.showMessageDialog(null, message);
+	JOptionPane.showMessageDialog(null, message);
     }
 
     /**
@@ -31,12 +31,12 @@ public final class Benutzerinterface {
      * @return gewaehlter Spielmodus
      */
     public static int zeigeSpielmoduseingabe() {
-        Object[] options = { "Leben ohne Tod", "34 Leben", "Standard" };
-        int n = JOptionPane.showOptionDialog(null,
-        	"Waehlen Sie den Spielmodus", "Spielmodus",
-        	JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-        	options, options[0]);
-        return n;
+	Object[] options = { "Leben ohne Tod", "34 Leben", "Standard" };
+	int n = JOptionPane.showOptionDialog(null,
+		"Waehlen Sie den Spielmodus", "Spielmodus",
+		JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+		options, options[0]);
+	return n;
     }
 
     /**
@@ -45,12 +45,12 @@ public final class Benutzerinterface {
      * @return gewaehltes Randverhalten
      */
     public static int zeigeRandverhalteneingabe() {
-        Object[] options = { "Pacman Universum", "Mauer des Todes" };
-        int n = JOptionPane.showOptionDialog(null,
-        	"Waehlen Sie das Randverhalten", "Randverhalten",
-        	JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-        	options, options[0]);
-        return n;
+	Object[] options = { "Pacman Universum", "Mauer des Todes" };
+	int n = JOptionPane.showOptionDialog(null,
+		"Waehlen Sie das Randverhalten", "Randverhalten",
+		JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+		options, options[0]);
+	return n;
     }
 
     /**
@@ -76,11 +76,12 @@ public final class Benutzerinterface {
      * @return Eingabewert
      */
     private static String zeigeInputDialog() {
-        String eingabe = JOptionPane
-        	.showInputDialog("Bitte den Dateinamen (OHNE Endung /'.start/') eingeben. Vorkonfigurierter Pfad ist: "
-        		+ System.getProperty("user.home")
-        		+ "/spiel_des_lebens/");
-        return eingabe;
+	String eingabe = JOptionPane
+		.showInputDialog("Bitte den Dateinamen (OHNE Endung /'.start/') "
+			+ "eingeben. Vorkonfigurierter Pfad ist: "
+			+ System.getProperty("user.home")
+			+ "/spiel_des_lebens/");
+	return eingabe;
     }
 
     /**
@@ -91,20 +92,20 @@ public final class Benutzerinterface {
      * @return aufbereiteter Dateipfad
      */
     private static String bereiteDateipfadAuf(
-            final String unverarbeiteterDateipfad) {
-        String verarbeiteterDateipfad = "";
-        for (int i = 0; i < unverarbeiteterDateipfad.length(); i++) {
-            if (unverarbeiteterDateipfad.charAt(i) == '/') { // Abfrage fuer
-        						     // UNIX
-        	verarbeiteterDateipfad += "/";
-            }
-            // }else if(unverarbeiteterDateipfad.charAt(i) == '\'){ // Abfrage
-            // fuer Windows
-            // verarbeiteterDateipfad += "\";
-            // }
-            verarbeiteterDateipfad += unverarbeiteterDateipfad.charAt(i);
-        }
-        return verarbeiteterDateipfad;
+	    final String unverarbeiteterDateipfad) {
+	String verarbeiteterDateipfad = "";
+	for (int i = 0; i < unverarbeiteterDateipfad.length(); i++) {
+	    if (unverarbeiteterDateipfad.charAt(i) == '/') { // Abfrage fuer
+							     // UNIX
+		verarbeiteterDateipfad += "/";
+	    }
+	    // }else if(unverarbeiteterDateipfad.charAt(i) == '\'){ // Abfrage
+	    // fuer Windows
+	    // verarbeiteterDateipfad += "\";
+	    // }
+	    verarbeiteterDateipfad += unverarbeiteterDateipfad.charAt(i);
+	}
+	return verarbeiteterDateipfad;
     }
 
     /**

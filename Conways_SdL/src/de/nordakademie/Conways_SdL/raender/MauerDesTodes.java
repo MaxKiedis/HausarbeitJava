@@ -7,7 +7,7 @@ import de.nordakademie.Conways_SdL.Spielfeld;
 
 public class MauerDesTodes extends Randverhalten {
 
-    public Spielfeld bereinigenRandverhalten(final Spielfeld spielfeld) {
+    public final Spielfeld bereinigenRandverhalten(final Spielfeld spielfeld) {
 	for (int i = 0; i < spielfeld.gibYDimension(); i++) {
 	    for (int j = 0; j < spielfeld.gibXDimension(); j++) {
 		if (i == 0 || i == spielfeld.gibYDimension() - 1 || j == 0
@@ -19,7 +19,8 @@ public class MauerDesTodes extends Randverhalten {
 	return spielfeld;
     }
 
-    public Spielfeld initialisierenRandverhalten(final Spielfeld spielfeld) {
+    public final Spielfeld initialisierenRandverhalten(final 
+	    Spielfeld spielfeld) {
 	ArrayList<boolean[]> zeilenSpielfeld = new ArrayList<boolean[]>();
 	int zeilenLaenge = spielfeld.gibXDimension() + 2;
 	boolean[] zeile = new boolean[zeilenLaenge];
@@ -48,7 +49,8 @@ public class MauerDesTodes extends Randverhalten {
 	return new Spielfeld(zeilenSpielfeld);
     }
 
-    public Spielfeld abschliessenRandverhalten(final Spielfeld spielfeld) {
+    public final Spielfeld abschliessenRandverhalten(final 
+	    Spielfeld spielfeld) {
 	ArrayList<boolean[]> zeilenSpielfeld = new ArrayList<boolean[]>();
 	int laengeZeile = spielfeld.gibXDimension() - 2;
 
