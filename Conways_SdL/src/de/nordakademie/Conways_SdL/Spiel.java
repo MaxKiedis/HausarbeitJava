@@ -75,7 +75,7 @@ public class Spiel {
 	    letztesFeld = feld;
 	    System.out.println();
 	    System.out.println("Runde " + counter);
-	    // letztesFeld.printSpielfeld();
+	    letztesFeld.printSpielfeld();
 	} while (!checkStatusSchoneinmalVorhanden(letztesFeld));
 
 	// statisch oder zyklisch

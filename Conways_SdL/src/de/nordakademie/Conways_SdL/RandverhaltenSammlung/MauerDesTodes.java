@@ -5,9 +5,8 @@ import java.util.ArrayList;
 import de.nordakademie.Conways_SdL.Randverhalten;
 import de.nordakademie.Conways_SdL.Spielfeld;
 
-public class MauerDesTodes implements Randverhalten {
+public class MauerDesTodes extends Randverhalten {
 
-    @Override
     public Spielfeld setzeRand(Spielfeld feld) {
 	for (int i = 0; i < feld.gebeZeilenAnzahl(); i++) {
 	    for (int j = 0; j < feld.gebeLaengeZeileZurueck(); j++) {
@@ -19,7 +18,6 @@ public class MauerDesTodes implements Randverhalten {
 	return feld;
     }
 
-    @Override
     public Spielfeld anlegenRand(Spielfeld spielfeld) {
 	ArrayList<boolean[]> werte = new ArrayList<boolean[]>();
 	int zeilenLaenge = spielfeld.gebeLaengeZeileZurueck() + 2;
@@ -49,10 +47,17 @@ public class MauerDesTodes implements Randverhalten {
 	return new Spielfeld(werte);
     }
 
-    @Override
     public Spielfeld abziehenRand(Spielfeld letztesFeld) {
-	return letztesFeld;
-	// TODO Auto-generated method stub
-	
+	ArrayList<boolean[]> werte = new ArrayList<boolean[]>();
+	int laengeZeile = letztesFeld.gebeLaengeZeileZurueck() - 2;
+
+	for (int i = 1; i < letztesFeld.gebeZeilenAnzahl() - 1; i++) {
+	    boolean[] neueZeile = new boolean[laengeZeile];
+	    for (int j = 0; j < neueZeile.length; j++) {
+		neueZeile[j] = letztesFeld.gebeZustandZelle(j + 1, i);
+	    }
+	    werte.add(neueZeile);
+	}
+	return new Spielfeld(werte);
     }
 }

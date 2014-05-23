@@ -42,7 +42,7 @@ public class Dateihandling {
 		}
 		// Pruefe Zeilenformat
 		if (!pruefeZeilenlaenge(zeile)) {
-		    Benutzerdialoge.gebeFehler("Die Zeilen haben eine unterschiedliche Laenge!");
+		    Benutzerdialoge.gebeFehler("Die Zeile ist zu lang oder es ist kein Inhalt vorhanden.");
 		    return null;
 		}
 
@@ -153,8 +153,9 @@ public class Dateihandling {
 	    dateiAusgabe.println("Die Ausgabe ist statisch nach " + counter + " Generationen!");
 	    dateiAusgabe.println();
 	    Spielfeld feld = verhalten.abziehenRand(letztesFeld);
-	    for (int i = 0; i < letztesFeld.gebeZeilenAnzahl(); i++) {
-		for (int j = 0; j < letztesFeld.gebeLaengeZeileZurueck(); j++) {
+
+	    for (int i = 0; i < feld.gebeZeilenAnzahl(); i++) {
+		for (int j = 0; j < feld.gebeLaengeZeileZurueck(); j++) {
 		    if (feld.gebeZustandZelle(j, i)) {
 			dateiAusgabe.print("O");
 		    } else {
