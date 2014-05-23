@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.6" icons="true" automaticImage="JPEG" always-add-relationships="true" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="de.nordakademie.Conways_SdL.Benutzerinterface" project="Conways_SdL" 
+    file="/Conways_SdL/src/de/nordakademie/Conways_SdL/Benutzerinterface.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="206" width="210" x="236" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="de.nordakademie.Conways_SdL.Dateihandling" project="Conways_SdL" 
+    file="/Conways_SdL/src/de/nordakademie/Conways_SdL/Dateihandling.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="188" width="345" x="1234" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="de.nordakademie.Conways_SdL.Randverhalten" project="Conways_SdL" 
+    file="/Conways_SdL/src/de/nordakademie/Conways_SdL/Randverhalten.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="474" y="368"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="de.nordakademie.Conways_SdL.Spiel" project="Conways_SdL" 
+    file="/Conways_SdL/src/de/nordakademie/Conways_SdL/Spiel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="242" width="329" x="678" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="de.nordakademie.Conways_SdL.Spielfeld" project="Conways_SdL" 
+    file="/Conways_SdL/src/de/nordakademie/Conways_SdL/Spielfeld.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="224" width="236" x="678" y="319"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="de.nordakademie.Conways_SdL.Spielmodus" project="Conways_SdL" 
+    file="/Conways_SdL/src/de/nordakademie/Conways_SdL/Spielmodus.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1143" y="349"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="de.nordakademie.Conways_SdL.raender.MauerDesTodes" project="Conways_SdL" 
+    file="/Conways_SdL/src/de/nordakademie/Conways_SdL/raender/MauerDesTodes.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="134" width="281" x="366" y="583"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="de.nordakademie.Conways_SdL.raender.PackmanUniversum" project="Conways_SdL" 
+    file="/Conways_SdL/src/de/nordakademie/Conways_SdL/raender/PackmanUniversum.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="134" width="281" x="45" y="583"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="de.nordakademie.Conways_SdL.spielmodi.Leben34" project="Conways_SdL" 
+    file="/Conways_SdL/src/de/nordakademie/Conways_SdL/spielmodi/Leben34.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="98" width="333" x="687" y="583"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="de.nordakademie.Conways_SdL.spielmodi.LebenOhneTod" project="Conways_SdL" 
+    file="/Conways_SdL/src/de/nordakademie/Conways_SdL/spielmodi/LebenOhneTod.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="98" width="333" x="1433" y="583"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="de.nordakademie.Conways_SdL.spielmodi.Standard" project="Conways_SdL" 
+    file="/Conways_SdL/src/de/nordakademie/Conways_SdL/spielmodi/Standard.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="98" width="333" x="1060" y="583"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="12">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="13" name="randverhalten"/>      
+      <multiplicity id="14" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="15">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
+  <association id="16">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="17" name="vergangeneSpielfelder"/>      
+      <multiplicity id="18" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="19">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="20" name="modus"/>      
+      <multiplicity id="21" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="22">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
+  <generalization id="23">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="24">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="25">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
+    accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

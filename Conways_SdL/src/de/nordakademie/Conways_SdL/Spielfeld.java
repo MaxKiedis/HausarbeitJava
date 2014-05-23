@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Spielfeld {
 
     /** Speicher fuer Zellzustaende fuer ein Spielfeld. */
-    private ArrayList<boolean[]> zustaendeZellen;
+    private final ArrayList<boolean[]> zustaendeZellen;
 
     /**
      * Konstruktor fuer ein Spielfeld.
@@ -35,16 +35,16 @@ public class Spielfeld {
      */
     public final Spielfeld entwickleGeneration(
 	    final Randverhalten randverhalten, final Spielmodus modus) {
-	ArrayList<boolean[]> werteFuerSpielfeld = new ArrayList<boolean[]>();
+	final ArrayList<boolean[]> werteFuerSpielfeld = new ArrayList<boolean[]>();
 	for (int i = 0; i < this.gibYDimension(); i++) {
-	    boolean[] zeile = new boolean[this.gibXDimension()];
+	    final boolean[] zeile = new boolean[this.gibXDimension()];
 	    for (int j = 0; j < this.gibXDimension(); j++) {
 		zeile[j] = modus.gibLebenszustandNaechsteRunde(
 			this.gibNachbaranzahl(j, i), this.gibZellzustand(j, i));
 	    }
 	    werteFuerSpielfeld.add(zeile);
 	}
-	Spielfeld neuesSpielfeld = randverhalten
+	final Spielfeld neuesSpielfeld = randverhalten
 		.bereinigenRandverhalten(new Spielfeld(werteFuerSpielfeld));
 	return neuesSpielfeld;
     }
