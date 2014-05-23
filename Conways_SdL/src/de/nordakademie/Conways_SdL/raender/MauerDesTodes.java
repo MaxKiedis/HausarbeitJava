@@ -1,4 +1,4 @@
-package de.nordakademie.Conways_SdL.RandverhaltenSammlung;
+package de.nordakademie.Conways_SdL.raender;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,7 @@ public class MauerDesTodes extends Randverhalten {
 	for (int i = 0; i < spielfeld.gibYDimension(); i++) {
 	    for (int j = 0; j < spielfeld.gibXDimension(); j++) {
 		if (i == 0 || i == spielfeld.gibYDimension() - 1 || j == 0 || j == spielfeld.gibXDimension() - 1) {
-		    spielfeld.setzeZustand(false, j, i);
+		    spielfeld.setzeZellzustand(false, j, i);
 		}
 	    }
 	}

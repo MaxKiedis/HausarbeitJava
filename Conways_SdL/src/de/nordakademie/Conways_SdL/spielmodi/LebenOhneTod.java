@@ -1,4 +1,4 @@
-package de.nordakademie.Conways_SdL.Spielmodi;
+package de.nordakademie.Conways_SdL.spielmodi;
 
 import de.nordakademie.Conways_SdL.Spielmodus;
 

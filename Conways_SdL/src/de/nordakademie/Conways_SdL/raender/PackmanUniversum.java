@@ -1,4 +1,4 @@
-package de.nordakademie.Conways_SdL.RandverhaltenSammlung;
+package de.nordakademie.Conways_SdL.raender;
 
 import de.nordakademie.Conways_SdL.Randverhalten;
 import de.nordakademie.Conways_SdL.Spielfeld;

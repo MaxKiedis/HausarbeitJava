@@ -6,11 +6,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import de.nordakademie.Conways_SdL.RandverhaltenSammlung.MauerDesTodes;
-import de.nordakademie.Conways_SdL.RandverhaltenSammlung.PackmanUniversum;
-import de.nordakademie.Conways_SdL.Spielmodi.Leben34;
-import de.nordakademie.Conways_SdL.Spielmodi.LebenOhneTod;
-import de.nordakademie.Conways_SdL.Spielmodi.Standard;
+import de.nordakademie.Conways_SdL.raender.MauerDesTodes;
+import de.nordakademie.Conways_SdL.raender.PackmanUniversum;
+import de.nordakademie.Conways_SdL.spielmodi.Leben34;
+import de.nordakademie.Conways_SdL.spielmodi.LebenOhneTod;
+import de.nordakademie.Conways_SdL.spielmodi.Standard;
 
 public class Spiel {
 
@@ -19,24 +19,23 @@ public class Spiel {
     private Spielmodus modus;
     private Randverhalten randverhalten;
     private String dateiname;
-    private JFrame loaderWindow;
-    private JLabel gen_counter;
+    private JFrame ladebalkenFenster;
+    private JLabel labelAnzahlGenerationen;
 
     Spiel() {
 	Spielfeld importiertesSpielfeld;
 	do {
 	    // Abfrage Dateipfad
-	    dateiname = Benutzerdialoge.zeigePfadeingabe();
+	    dateiname = Benutzerinterface.ermittlePfad();
 	    // Laden der Datei
-	    importiertesSpielfeld = Dateihandling
-		    .leseSpielfeldAusDatei(dateiname);
+	    importiertesSpielfeld = Dateihandling.einlesenSpielfeld(dateiname);
 	} while (importiertesSpielfeld == null);
 
 	// Waehlen des Spielmodus
 	// 0 = Leben ohne Tod
 	// 1 = 34 Leben
 	// 2 = Standard
-	switch (Benutzerdialoge.zeigeSpielmoduseingabe()) {
+	switch (Benutzerinterface.zeigeSpielmoduseingabe()) {
 	case 0:
 	    modus = new LebenOhneTod();
 	    break;
@@ -56,7 +55,7 @@ public class Spiel {
 	// Waehlen des Randverhaltens
 	// 0 = Wand des Todes
 	// 1 = Pacman Universum
-	switch (Benutzerdialoge.zeigeRandverhalteneingabe()) {
+	switch (Benutzerinterface.zeigeRandverhalteneingabe()) {
 	case 0:
 	    randverhalten = new PackmanUniversum();
 	    break;
@@ -81,7 +80,7 @@ public class Spiel {
 
     public final void starten() {
 
-	showLoaderWindow();
+	zeigeLadebalken();
 
 	// Eingelesenes Spielfeld als Startzustand definieren
 	Spielfeld spielfeldAlteGeneration = vergangeneSpielfelder.get(0);
@@ -90,47 +89,31 @@ public class Spiel {
 	// Dies ist der Algorithmus zum entwickeln der Spielfelder
 	do {
 	    anzahlGenerationen++;
-	    Spielfeld spielfeldNeueGeneration = entwickleGeneration(
-		    spielfeldAlteGeneration, randverhalten);
+	    Spielfeld spielfeldNeueGeneration = spielfeldAlteGeneration
+		    .entwickleGeneration(randverhalten, modus);
 	    spielfeldAlteGeneration = spielfeldNeueGeneration;
-	    gen_counter.setText("Generation: " + anzahlGenerationen);
-	} while (!istDublette(spielfeldAlteGeneration));
+	    labelAnzahlGenerationen
+		    .setText("Generation: " + anzahlGenerationen);
+	} while (!istInVergangenenSpielfeldernVorhanden(spielfeldAlteGeneration));
 
-	hideLoaderWindow();
+	versteckeLadebalken();
 
 	// statisch oder zyklisch
-	if (istGleichesSpielfeld(spielfeldAlteGeneration,
-		vergangeneSpielfelder.get(vergangeneSpielfelder.size() - 1))) {
-	    Dateihandling.speichereEndzustand(spielfeldAlteGeneration,
+	if (spielfeldAlteGeneration.istGleichesSpielfeld(vergangeneSpielfelder
+		.get(vergangeneSpielfelder.size() - 1))) {
+	    Dateihandling.speichernSpielfeld(spielfeldAlteGeneration,
 		    anzahlGenerationen, randverhalten, dateiname);
 	} else {
-	    Benutzerdialoge
+	    Benutzerinterface
 		    .zeigeInfoFenster("Der Zustand ist zyklisch. Erreicht nach "
 			    + anzahlGenerationen + " Generationen");
 	}
-	System.exit(0);
     }
 
-    private Spielfeld entwickleGeneration(final Spielfeld altesSpielfeld,
-	    final Randverhalten randverhalten) {
-	ArrayList<boolean[]> werteFuerSpielfeld = new ArrayList<boolean[]>();
-	for (int i = 0; i < altesSpielfeld.gibYDimension(); i++) {
-	    boolean[] zeile = new boolean[altesSpielfeld.gibXDimension()];
-	    for (int j = 0; j < altesSpielfeld.gibXDimension(); j++) {
-		zeile[j] = modus.gibLebenszustandNaechsteRunde(
-			altesSpielfeld.gibNachbaranzahl(j, i),
-			altesSpielfeld.gibZellzustand(j, i));
-	    }
-	    werteFuerSpielfeld.add(zeile);
-	}
-	Spielfeld neuesSpielfeld = randverhalten.setzeRand(new Spielfeld(
-		werteFuerSpielfeld));
-	return neuesSpielfeld;
-    }
-
-    private boolean istDublette(final Spielfeld spielfeld) {
+    private boolean istInVergangenenSpielfeldernVorhanden(
+	    final Spielfeld spielfeld) {
 	for (int i = 0; i < vergangeneSpielfelder.size(); i++) {
-	    if (istGleichesSpielfeld(vergangeneSpielfelder.get(i), spielfeld)) {
+	    if (spielfeld.istGleichesSpielfeld(vergangeneSpielfelder.get(i))) {
 		return true;
 	    }
 	}
@@ -138,32 +121,19 @@ public class Spiel {
 	return false;
     }
 
-    private boolean istGleichesSpielfeld(final Spielfeld spielfeld,
-	    final Spielfeld neuesFeld) {
-	for (int i = 0; i < spielfeld.gibYDimension(); i++) {
-	    for (int j = 0; j < spielfeld.gibXDimension(); j++) {
-		if (spielfeld.gibZellzustand(j, i) != neuesFeld.gibZellzustand(
-			j, i)) {
-		    return false;
-		}
-	    }
-	}
-	return true;
-    }
-
-    private void showLoaderWindow() {
-	loaderWindow = new JFrame("Working...");
-
+    private void zeigeLadebalken() {
+	ladebalkenFenster = new JFrame("Working...");
 	ImageIcon loading = new ImageIcon("img/spinner.gif");
-	gen_counter = new JLabel("Generation: 1", loading, JLabel.CENTER);
-	loaderWindow.add(gen_counter);
-
-	loaderWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	loaderWindow.setSize(300, 60);
-	loaderWindow.setVisible(true);
+	labelAnzahlGenerationen = new JLabel("Generation: 1", loading,
+		JLabel.CENTER);
+	ladebalkenFenster.add(labelAnzahlGenerationen);
+	ladebalkenFenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	ladebalkenFenster.setSize(300, 60);
+	ladebalkenFenster.setVisible(true);
     }
 
-    private void hideLoaderWindow() {
-	loaderWindow.setVisible(false);
+    private void versteckeLadebalken() {
+	ladebalkenFenster.setVisible(false);
+	ladebalkenFenster.dispose();
     }
 }

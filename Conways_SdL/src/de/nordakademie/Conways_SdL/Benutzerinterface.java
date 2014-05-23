@@ -2,28 +2,51 @@ package de.nordakademie.Conways_SdL;
 
 import javax.swing.JOptionPane;
 
-public class Benutzerdialoge {
+/**
+ * Stellt Funktionen zur grafischen Benutzerinteraktion bereit.
+ * 
+ * @author kaineubauer
+ */
+public class Benutzerinterface {
 
-    public static String zeigePfadeingabe() {
+    /**
+     * Privater Konstruktor, da niemand Objekte erzeugen sollte
+     */
+    private Benutzerinterface() {
+    }
+
+    /**
+     * Zeigt einen Inputdialog und prueft den eingegebenen Wert. Bereitet diesen
+     * ggf. auf.
+     * 
+     * @return aufbereiteter Dateiname/pfad
+     */
+    public static String ermittlePfad() {
 	String input;
 	do {
-	    input = Benutzerdialoge.zeigeInputDialog();
+	    input = Benutzerinterface.zeigeInputDialog();
 	    if (input == null) {
 		System.exit(0);
 	    }
 	} while (istDateipfadLeer(bereiteDateipfadAuf(input)));
-	System.out.println(input);
 	return input;
     }
 
-    public static void zeigeFehlermeldung(final String message) {
-	JOptionPane.showMessageDialog(null, message);
-    }
-
+    /**
+     * Zeigt eine MessageDialogBox an
+     * 
+     * @param message
+     *            anzuzeigender String
+     */
     public static void zeigeInfoFenster(final String message) {
 	JOptionPane.showMessageDialog(null, message);
     }
 
+    /**
+     * Zeigt eine InputDialogBox an
+     * 
+     * @return Eingabewert
+     */
     public static String zeigeInputDialog() {
 	String eingabe = JOptionPane
 		.showInputDialog("Bitte den Dateinamen (OHNE Endung /'.start/') eingeben. Vorkonfigurierter Pfad ist: "
@@ -32,6 +55,11 @@ public class Benutzerdialoge {
 	return eingabe;
     }
 
+    /**
+     * Zeigt eine OptionDialogBox an mit waehlbaren Spielmodi
+     * 
+     * @return gewaehlter Spielmodus
+     */
     public static int zeigeSpielmoduseingabe() {
 	Object[] options = { "Leben ohne Tod", "34 Leben", "Standard" };
 	int n = JOptionPane.showOptionDialog(null,
@@ -41,6 +69,11 @@ public class Benutzerdialoge {
 	return n;
     }
 
+    /**
+     * Zeigt eine OptionDialogBox an mit waehlbarem Randverhalten
+     * 
+     * @return gewaehltes Randverhalten
+     */
     public static int zeigeRandverhalteneingabe() {
 	Object[] options = { "Pacman Universum", "Mauer des Todes" };
 	int n = JOptionPane.showOptionDialog(null,
@@ -50,15 +83,29 @@ public class Benutzerdialoge {
 	return n;
     }
 
+    /**
+     * ueberprueft ob der uebergebene String leer ist
+     * 
+     * @param dateipfad
+     *            zu ueberpruefender String
+     * @return Wahrheitswert bzgl. StringLaenge
+     */
     private static boolean istDateipfadLeer(final String dateipfad) {
 	if (dateipfad.equals("")) {
-	    Benutzerdialoge
-		    .zeigeFehlermeldung("Bitte geben sie einen Dateinamen ein!");
+	    Benutzerinterface
+		    .zeigeInfoFenster("Bitte geben sie einen Dateinamen ein!");
 	    return true;
 	}
 	return false;
     }
 
+    /**
+     * Liest String ein und ergaenzt ggf. die Sonderzeichen "/" bzw. "\"
+     * 
+     * @param unverarbeiteterDateipfad
+     *            Dateipfad
+     * @return aufbereiteter Dateipfad
+     */
     private static String bereiteDateipfadAuf(
 	    final String unverarbeiteterDateipfad) {
 	String verarbeiteterDateipfad = "";

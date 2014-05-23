@@ -4,23 +4,23 @@ import java.util.ArrayList;
 
 public class Spielfeld {
 
-    private ArrayList<boolean[]> zeilenMitZellen;
+    private ArrayList<boolean[]> zustaendeZellen;
 
     public Spielfeld(final boolean[] zeile) {
-	zeilenMitZellen = new ArrayList<boolean[]>();
-	zeilenMitZellen.add(zeile);
+	zustaendeZellen = new ArrayList<boolean[]>();
+	zustaendeZellen.add(zeile);
     }
 
     public Spielfeld(final ArrayList<boolean[]> zeilenMitZellen) {
-	this.zeilenMitZellen = zeilenMitZellen;
+	this.zustaendeZellen = zeilenMitZellen;
     }
 
     public final void hinzufuegenZeile(final boolean[] zeile) {
-	zeilenMitZellen.add(zeile);
+	zustaendeZellen.add(zeile);
     }
 
     public final int gibXDimension() {
-	return zeilenMitZellen.get(0).length;
+	return zustaendeZellen.get(0).length;
     }
 
     public final int gibNachbaranzahl(final int x, final int y) {
@@ -62,15 +62,42 @@ public class Spielfeld {
     }
 
     public final boolean gibZellzustand(final int x, final int y) {
-	return zeilenMitZellen.get(y)[x];
+	return zustaendeZellen.get(y)[x];
     }
 
     public final int gibYDimension() {
-	return zeilenMitZellen.size();
+	return zustaendeZellen.size();
     }
 
-    public final void setzeZustand(final boolean zustand, final int x,
+    public final void setzeZellzustand(final boolean zustand, final int x,
 	    final int y) {
-	zeilenMitZellen.get(y)[x] = zustand;
+	zustaendeZellen.get(y)[x] = zustand;
+    }
+
+    public Spielfeld entwickleGeneration(Randverhalten randverhalten,
+	    Spielmodus modus) {
+	ArrayList<boolean[]> werteFuerSpielfeld = new ArrayList<boolean[]>();
+	for (int i = 0; i < this.gibYDimension(); i++) {
+	    boolean[] zeile = new boolean[this.gibXDimension()];
+	    for (int j = 0; j < this.gibXDimension(); j++) {
+		zeile[j] = modus.gibLebenszustandNaechsteRunde(
+			this.gibNachbaranzahl(j, i), this.gibZellzustand(j, i));
+	    }
+	    werteFuerSpielfeld.add(zeile);
+	}
+	Spielfeld neuesSpielfeld = randverhalten.setzeRand(new Spielfeld(
+		werteFuerSpielfeld));
+	return neuesSpielfeld;
+    }
+
+    public boolean istGleichesSpielfeld(final Spielfeld spielfeld) {
+	for (int i = 0; i < spielfeld.gibYDimension(); i++) {
+	    for (int j = 0; j < spielfeld.gibXDimension(); j++) {
+		if (spielfeld.gibZellzustand(j, i) != this.gibZellzustand(j, i)) {
+		    return false;
+		}
+	    }
+	}
+	return true;
     }
 }
